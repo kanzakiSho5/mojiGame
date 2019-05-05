@@ -17,15 +17,14 @@ public class Cube : MonoBehaviour
     private void OnEnable()
     {
         Pos = new Vector2Int(4, 0);
+        gameObject.transform.position = new Vector3(Pos.x - 1, (20 - Pos.y) - 1, 0);
         isMovable = true;
         SetChar(true);
     }
 
     private void Update()
     {
-        // TODO: いずれ操作系を専用のManagerに移行
         
-
         gameObject.transform.position = new Vector3(Pos.x - 1, (20 - Pos.y) - 1, 0);
     }
 
