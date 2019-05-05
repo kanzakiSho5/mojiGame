@@ -42,10 +42,11 @@ public class GameManager : MonoBehaviour
             currentMovableCube = Instantiate<GameObject>(blockPrefab).GetComponent<Cube>();
         }
 
-        if(currentDownTime > blockDownSpeed && isCanMoveBlock())
+        if(currentDownTime > blockDownSpeed)
         {
             currentDownTime = 0f;
-            currentMovableCube.DropBlock();
+            if(isCanMoveBlock())
+                currentMovableCube.DropBlock();
         }
 
         UpdateTime();
