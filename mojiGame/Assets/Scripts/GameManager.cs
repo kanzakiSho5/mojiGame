@@ -13,16 +13,17 @@ public class GameManager : MonoBehaviour
     float blockDownSpeed = 2f;                      // ブロックの落ちるスピード
     [SerializeField]
     float blockFixSpeed = .5f;                      // ブロックが固定される時間
+    public char[,] fieldChar {get; protected set;} = new char[21,8];     // フィールドにブロックが置かれているかどうか 0:なし その他:あり
 
     [Header("Debug")]
     public float currentTime;
-    private int[,] fieldStatus = new int[21,8];     // フィールドにブロックが置かれているかどうか 0:なし 1:あり
     [SerializeField]
     private float currentFixTime;
     [SerializeField]
     private float currentDownTime;
     private Cube currentMovableCube;
 
+    public static GameManager Instance;
 
     private void Awake()
     {
@@ -31,13 +32,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        MoveBlock();
 
+        // ブロックを固定
         if(currentFixTime > blockFixSpeed)
         {
             currentFixTime = 0f;
             currentMovableCube.isMovable = false;
-            fieldStatus[currentMovableCube.Pos.y, currentMovableCube.Pos.x] = 1;
+            fieldChar[currentMovableCube.Pos.y-1,currentMovableCube.Pos.x-1] = currentMovableCube.blockChar;
+            Debug.Log("FindWord = " + LibraryManager.Instance.FindWordByPos(currentMovableCube.Pos));
             PrintField();
             currentMovableCube = Instantiate<GameObject>(blockPrefab).GetComponent<Cube>();
         }
@@ -45,36 +47,19 @@ public class GameManager : MonoBehaviour
         if(currentDownTime > blockDownSpeed)
         {
             currentDownTime = 0f;
-            if(isCanMoveBlock())
+            if(isBlockByPos())
                 currentMovableCube.DropBlock();
         }
 
         UpdateTime();
     }
 
-    private void MoveBlock()
+    /// <summary>
+    /// 座標にブロックがあるかどうかを調べる
+    /// </summary>
+    public bool isBlockByPos(int Horizontal = 0, int Vertical = 1)
     {
-        if (Input.GetKeyDown(KeyCode.A) && isCanMoveBlock(-1, 0))
-        {
-            currentMovableCube.Pos.x--;
-            currentFixTime = 0f;
-        }
-        else if (Input.GetKeyDown(KeyCode.D) && isCanMoveBlock(1, 0))
-        {
-            currentMovableCube.Pos.x++;
-            currentFixTime = 0f;
-        }
-        else if (Input.GetKeyDown(KeyCode.S) && isCanMoveBlock())
-        {
-            currentMovableCube.Pos.y++;
-            currentDownTime = 0f;
-        }
-    }
-
-    
-    private bool isCanMoveBlock(int Horizontal = 0, int Vertical = 1)
-    {
-        if(fieldStatus[currentMovableCube.Pos.y + Vertical, currentMovableCube.Pos.x + Horizontal] == 0)
+        if(fieldChar[(currentMovableCube.Pos.y - 1) + Vertical, (currentMovableCube.Pos.x - 1) + Horizontal] == '0')
             return true;
         return false;
     }
@@ -86,7 +71,7 @@ public class GameManager : MonoBehaviour
         currentDownTime += Time.deltaTime;
         currentTime     += Time.deltaTime;
 
-        if (!isCanMoveBlock())
+        if (!isBlockByPos())
             currentFixTime += Time.deltaTime;
     }
 
@@ -95,16 +80,23 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void init()
     {
-        for (int i = 0; i < fieldStatus.GetLength(0); i++)
+        if(Instance == null)
+            Instance = this;
+
+
+        // fieldCharの初期化
+        for (int i = 0; i < fieldChar.GetLength(0); i++)
         {
-            for (int j = 0; j < fieldStatus.GetLength(1); j++)
+            for (int j = 0; j < fieldChar.GetLength(1); j++)
             {
-                fieldStatus[i, j] = 0;
+                fieldChar[i, j] = '0';
                 if (i == 20 || j == 0 || j == 7)
-                    fieldStatus[i, j] = 1;
+                    fieldChar[i, j] = '1';
             }
         }
 
+        
+        
         currentMovableCube = Instantiate<GameObject>(blockPrefab).GetComponent<Cube>();
         currentTime = 0;
         currentFixTime = 0;
@@ -116,11 +108,11 @@ public class GameManager : MonoBehaviour
     private void PrintField()
     {
         string DebStr = "";
-        for (int i = 0; i < fieldStatus.GetLength(0); i++)
+        for (int i = 0; i < fieldChar.GetLength(0); i++)
         {
-            for (int j = 0; j < fieldStatus.GetLength(1); j++)
+            for (int j = 0; j < fieldChar.GetLength(1); j++)
             {
-                DebStr += fieldStatus[i, j].ToString();
+                DebStr += fieldChar[i, j].ToString();
             }
             DebStr += "\n";
         }

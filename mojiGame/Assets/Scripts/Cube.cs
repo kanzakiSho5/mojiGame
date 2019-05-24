@@ -8,24 +8,33 @@ public class Cube : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text;
     [SerializeField]
-    private char blockChar;
-    [SerializeField]
     public bool isMovable;
-    [SerializeField]
+
+    [System.NonSerialized]
     public Vector2Int Pos;
     
+    [System.NonSerialized]
+    public char blockChar;
+
+    private InputManager inputMan;
+
     private void OnEnable()
     {
         Pos = new Vector2Int(4, 0);
-        gameObject.transform.position = new Vector3(Pos.x - 1, (20 - Pos.y) - 1, 0);
+        inputMan = InputManager.Instance;
+        gameObject.transform.position = new Vector3(Pos.x, (20 - Pos.y), 0);
         isMovable = true;
         SetChar(true);
     }
 
     private void Update()
     {
-        
-        gameObject.transform.position = new Vector3(Pos.x - 1, (20 - Pos.y) - 1, 0);
+        Move();
+    }
+
+    private void UpdatePos()
+    {
+        gameObject.transform.position = new Vector3(Pos.x, (20 - Pos.y), 0);
     }
 
     /// <summary>
@@ -80,6 +89,28 @@ public class Cube : MonoBehaviour
         if (text != null)
             text.SetText(blockChar.ToString());
     }
+    
+    private void Move()
+    {
+        if(isMovable)
+        {
+            if (inputMan.BtnLeftDown && GameManager.Instance.isBlockByPos(-1, 0))
+            {
+                Pos.x--;
+                UpdatePos();
+            }
+            else if (inputMan.BtnRightDown && GameManager.Instance.isBlockByPos(1, 0))
+            {
+                Pos.x++;
+                UpdatePos();
+            }
+            else if (inputMan.BtnDownDown && GameManager.Instance.isBlockByPos())
+            {
+                Pos.y++;
+                UpdatePos();
+            }
+        }
+    }
 
     /// <summary>
     /// 1ブロック分下げる
@@ -87,5 +118,6 @@ public class Cube : MonoBehaviour
     public void DropBlock()
     {
         Pos.y++;
+        UpdatePos();
     }
 }
