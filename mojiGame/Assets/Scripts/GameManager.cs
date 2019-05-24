@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour
     float blockDownSpeed = 2f;                      // ブロックの落ちるスピード
     [SerializeField]
     float blockFixSpeed = .5f;                      // ブロックが固定される時間
+
     public char[,] fieldChar {get; protected set;} = new char[21,8];     // フィールドにブロックが置かれているかどうか 0:なし その他:あり
+    private Cube[,] fieldCube = new Cube[20, 6];
 
     [Header("Debug")]
     public float currentTime;
@@ -30,6 +32,11 @@ public class GameManager : MonoBehaviour
         init();
     }
 
+    private void Start()
+    {
+        currentMovableCube = Instantiate<GameObject>(blockPrefab).GetComponent<Cube>();
+    }
+
     private void Update()
     {
 
@@ -38,8 +45,33 @@ public class GameManager : MonoBehaviour
         {
             currentFixTime = 0f;
             currentMovableCube.isMovable = false;
-            fieldChar[currentMovableCube.Pos.y-1,currentMovableCube.Pos.x-1] = currentMovableCube.blockChar;
-            Debug.Log("FindWord = " + LibraryManager.Instance.FindWordByPos(currentMovableCube.Pos));
+            fieldChar[currentMovableCube.Pos.y - 1, currentMovableCube.Pos.x - 1] = currentMovableCube.blockChar;
+            fieldCube[currentMovableCube.Pos.y - 1, currentMovableCube.Pos.x - 2] = currentMovableCube;
+            FindedWordAndPos[] findedWords = LibraryManager.Instance.FindWordByPos(currentMovableCube.Pos);
+            Debug.Log("findedWords = "+ findedWords.Length);
+            // 完成した単語を検索して文字を赤くする
+            for (int i = 0; i < findedWords.Length; i++)
+            {
+                var Pos = findedWords[i].Position;
+                for (int j = 0; j < findedWords[i].Word.word.Length; j++)
+                {
+                    Debug.Log("currentCube.x = " + currentMovableCube.Pos.x + ", Pos.x = " + Pos.x +
+                        "\ncurrentCube.y = " + currentMovableCube.Pos.y + ", Pos.y = " + Pos.y);
+                    // タテヨコを判定
+                    if(currentMovableCube.Pos.x == Pos.x)
+                    {
+                        // 縦
+                        Debug.Log("fieldCube = " + (Pos.x - 2) + ", " + (currentMovableCube.Pos.y - j));
+                        fieldCube[currentMovableCube.Pos.y - j, Pos.x - 2].SetColor();
+                    }
+                    else
+                    {
+                        // 横                       
+                        Debug.Log("fieldCube = " + (Pos.x + j) + ", " + (Pos.y - 1));
+                        fieldCube[Pos.y - 1, Pos.x + j].SetColor();
+                    }
+                }
+            }
             PrintField();
             currentMovableCube = Instantiate<GameObject>(blockPrefab).GetComponent<Cube>();
         }
@@ -97,7 +129,6 @@ public class GameManager : MonoBehaviour
 
         
         
-        currentMovableCube = Instantiate<GameObject>(blockPrefab).GetComponent<Cube>();
         currentTime = 0;
         currentFixTime = 0;
         currentDownTime = 0;
@@ -108,6 +139,7 @@ public class GameManager : MonoBehaviour
     private void PrintField()
     {
         string DebStr = "";
+        /*
         for (int i = 0; i < fieldChar.GetLength(0); i++)
         {
             for (int j = 0; j < fieldChar.GetLength(1); j++)
@@ -115,6 +147,19 @@ public class GameManager : MonoBehaviour
                 DebStr += fieldChar[i, j].ToString();
             }
             DebStr += "\n";
+        }
+        */
+
+        for (int i = 0; i < fieldCube.GetLength(0); i++)
+        {
+            for(int j = 0; j < fieldCube.GetLength(1); j++)
+            {
+                if (fieldCube[i, j] != null)
+                    DebStr += fieldCube[i, j].blockChar.ToString();
+                else
+                    DebStr += "●";
+            }
+            DebStr += (i.ToString() +"\n");
         }
         Debug.Log(DebStr);
     }

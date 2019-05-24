@@ -120,4 +120,12 @@ public class Cube : MonoBehaviour
         Pos.y++;
         UpdatePos();
     }
+
+    /// <summary>
+    /// Textの色を決める
+    /// </summary>
+    public void SetColor()
+    {
+        text.color = Color.red;
+    }
 }
