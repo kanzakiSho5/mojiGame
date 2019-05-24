@@ -23,39 +23,87 @@ public class LibraryManager : MonoBehaviour
         }
     }
 
-    public Vector2Int[] FindWordByPos(Vector2Int Pos)
+    public FindedWordAndPos[] FindWordByPos(Vector2Int Pos)
     {
         char[,] fieldChar = GameManager.Instance.fieldChar;
-        
-        char[] Hstr = new char[6];
-        char[] Vstr = new char[11];
+        List<FindedWordAndPos> ret = new List<FindedWordAndPos>();
         for(int i = 0; i < 2; i++)
         {
-            for(int j = -5; j <= 5; j++)
+            char[] str = new char[11];
+            // 上下左右文字数制限の６文字分(自身もカウントするので5つ)
+            for (int j = -5; j <= 5; j++)
             {
+                // たてか横かを判定
                 if(i == 0)
                 {
+                    // たて
+                    // fieldの範囲外にならないように
                     if(Pos.x + j > 0 && Pos.x + j <= 6)
                     {
-                        Hstr[j - 1] = fieldChar[Pos.y -1, Pos.x + j];
+                        str[Pos.x + j - 1] = fieldChar[Pos.y - 1, Pos.x + j];
+                        //Debug.Log("横 = " + (j + 5));
                     }
                 }
                 else
                 {
+                    // よこ
+                    // fieldの範囲外にならないように
                     if(Pos.y + j > 0 && Pos.y + j <= 20)
                     {
-                        Vstr[j - 1] = fieldChar[Pos.y -1 + j, Pos.x - 1];
+                        //Debug.Log("縦 = " + j +", "+ Pos.y + "," + (j + 5));
+                        str[j + 5] = fieldChar[Pos.y - 1 + j, Pos.x - 1];
+                    }
+                }
+            }
+            Debug.Log(new string(str));
+            for(int j = 0; j < library.words.Length; j++)
+            {
+                // TODO: 完成した単語の検索（位置？言葉？完成した単語のブロックの位置がわからないといけない）
+                //始めの位置を探す
+                string searchWord = library.words[j].word;
+                string s = new string(str);
+                int foundIndex = s.IndexOf(searchWord);
+                while (0 <= foundIndex)
+                {
+                    // タテヨコ判定
+                    if (i == 0)
+                        ret.Add(new FindedWordAndPos(library.words[j], new Vector2Int(foundIndex, Pos.y)));
+                    else
+                        ret.Add(new FindedWordAndPos(library.words[j], new Vector2Int(Pos.x, foundIndex)));
+
+                    //次の検索開始位置
+                    int nextIndex = foundIndex + searchWord.Length;
+                    if (nextIndex < s.Length)
+                    {
+                        //次の位置を探す
+                        foundIndex = s.IndexOf(searchWord, nextIndex);
+                    }
+                    else
+                    {
+                        //最後まで検索したときは終わる
+                        break;
                     }
                 }
             }
 
-            for(int j = 0; j < library.words.Length; j++)
-            {
-                // TODO: 完成した単語の検索（位置？言葉？完成した単語のブロックの位置がわからないといけない）
-            }
-
         }
-        return Vstr;
+        return ret.ToArray();
+    }
+}
+
+/// <summary>
+/// Finded word and position.
+/// フィールド上で見つけた単語とその開始位置を持ったクラス
+/// </summary>
+public class FindedWordAndPos
+{
+    public Word Word;
+    public Vector2Int Position;
+
+    public FindedWordAndPos(Word word, Vector2Int position)
+    {
+        this.Word = word;
+        this.Position = position;
     }
 }
 
