@@ -47,8 +47,12 @@ public class GameManager : MonoBehaviour
             currentMovableCube.isMovable = false;
             fieldChar[currentMovableCube.Pos.y - 1, currentMovableCube.Pos.x - 1] = currentMovableCube.blockChar;
             fieldCube[currentMovableCube.Pos.y - 1, currentMovableCube.Pos.x - 2] = currentMovableCube;
-            FindedWordAndPos[] findedWords = LibraryManager.Instance.FindWordByPos(currentMovableCube.Pos);
+            FindedWordAndPos[] findedWords = LibraryManager.FindWordByPos(currentMovableCube.Pos);
+
+            // Deb
+            PrintField();
             Debug.Log("findedWords = "+ findedWords.Length);
+
             // 完成した単語を検索して文字を赤くする
             for (int i = 0; i < findedWords.Length; i++)
             {
@@ -62,17 +66,18 @@ public class GameManager : MonoBehaviour
                     {
                         // 縦
                         Debug.Log("fieldCube = " + (Pos.x - 2) + ", " + (currentMovableCube.Pos.y - j));
-                        fieldCube[currentMovableCube.Pos.y - j, Pos.x - 2].SetColor();
+                        if(!fieldCube[currentMovableCube.Pos.y - j, Pos.x - 2].isCreatedWord)
+                            fieldCube[currentMovableCube.Pos.y - j, Pos.x - 2].OnCreatedWord();
                     }
                     else
                     {
                         // 横                       
                         Debug.Log("fieldCube = " + (Pos.x + j) + ", " + (Pos.y - 1));
-                        fieldCube[Pos.y - 1, Pos.x + j].SetColor();
+                        if(!fieldCube[Pos.y - 1, Pos.x + j].isCreatedWord)
+                            fieldCube[Pos.y - 1, Pos.x + j].OnCreatedWord();
                     }
                 }
             }
-            PrintField();
             currentMovableCube = Instantiate<GameObject>(blockPrefab).GetComponent<Cube>();
         }
 
