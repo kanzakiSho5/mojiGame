@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         if(currentFixTime > blockFixSpeed)
         {
             currentFixTime = 0f;
-            currentMovableCube.isMovable = false;
+            currentMovableCube.FixedBlock();
             fieldChar[currentMovableCube.Pos.y - 1, currentMovableCube.Pos.x - 1] = currentMovableCube.blockChar;
             fieldCube[currentMovableCube.Pos.y - 1, currentMovableCube.Pos.x - 2] = currentMovableCube;
             FindedWordAndPos[] findedWords = LibraryManager.Instance.FindWordByPos(currentMovableCube.Pos);
@@ -60,15 +60,23 @@ public class GameManager : MonoBehaviour
                     // タテヨコを判定
                     if(currentMovableCube.Pos.x == Pos.x)
                     {
-                        // 縦
-                        Debug.Log("fieldCube = " + (Pos.x - 2) + ", " + (currentMovableCube.Pos.y - j));
-                        fieldCube[currentMovableCube.Pos.y - j, Pos.x - 2].SetColor();
+                        // 横
+                        Debug.Log("fieldCube = " + (Pos.x - 1) + ", " + (currentMovableCube.Pos.y + Pos.y + j - 2));
+
+                        Cube cube = fieldCube[currentMovableCube.Pos.y + Pos.y + j - 1, Pos.x - 2];
+                        if (cube != null)
+                            if(!cube.isFixed)
+                                fieldCube[currentMovableCube.Pos.y + Pos.y + j - 1, Pos.x - 2].CreatedWord();
                     }
                     else
                     {
-                        // 横                       
+                        // たて                       
                         Debug.Log("fieldCube = " + (Pos.x + j) + ", " + (Pos.y - 1));
-                        fieldCube[Pos.y - 1, Pos.x + j].SetColor();
+
+                        Cube cube = fieldCube[Pos.y - 1, Pos.x + j];
+                        if(cube != null)
+                            if (!cube.isFixed)
+                                fieldCube[Pos.y - 1, Pos.x + j].CreatedWord();
                     }
                 }
             }

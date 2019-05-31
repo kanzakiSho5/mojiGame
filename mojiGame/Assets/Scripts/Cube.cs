@@ -7,8 +7,9 @@ public class Cube : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI text;
-    [SerializeField]
-    public bool isMovable;
+    private bool isMovable;
+
+    public bool isFixed { get; protected set; }
 
     [System.NonSerialized]
     public Vector2Int Pos;
@@ -17,9 +18,12 @@ public class Cube : MonoBehaviour
     public char blockChar;
 
     private InputManager inputMan;
+    private const float DeleteTime = 5.0f;
+    private float FixedTime = 0;
 
     private void OnEnable()
     {
+        isFixed = false;
         Pos = new Vector2Int(4, 0);
         inputMan = InputManager.Instance;
         gameObject.transform.position = new Vector3(Pos.x, (20 - Pos.y), 0);
@@ -30,6 +34,16 @@ public class Cube : MonoBehaviour
     private void Update()
     {
         Move();
+        if (!isMovable && !isFixed)
+            DeleteBlock();
+    }
+
+    private void DeleteBlock()
+    {
+        // TODO: GameManagerのFieldも修正しないといけない
+        if (GameManager.Instance.currentTime - FixedTime >= DeleteTime)
+            Destroy(gameObject);
+
     }
 
     private void UpdatePos()
@@ -122,10 +136,20 @@ public class Cube : MonoBehaviour
     }
 
     /// <summary>
-    /// Textの色を決める
+    /// 動かないようにする。
     /// </summary>
-    public void SetColor()
+    public void FixedBlock()
     {
+        isMovable = false;
+        FixedTime = GameManager.Instance.currentTime;
+    }
+
+    /// <summary>
+    /// ブロックが文字ができた時
+    /// </summary>
+    public void CreatedWord()
+    {
+        isFixed = true;
         text.color = Color.red;
     }
 }
