@@ -23,42 +23,42 @@ public class LibraryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ポジションから、縦横６文字に単語が含まれているかを探す。
+    /// </summary>
+    /// <returns>見つけた単語と位置</returns>
+    /// <param name="Pos">検索する原点</param>
     public FindedWordAndPos[] FindWordByPos(Vector2Int Pos)
     {
         char[,] fieldChar = GameManager.Instance.fieldChar;
         List<FindedWordAndPos> ret = new List<FindedWordAndPos>();
         for(int i = 0; i < 2; i++)
         {
-            char[] str = new char[11];
-            // 上下左右文字数制限の６文字分(自身もカウントするので5つ)
-            for (int j = -5; j <= 5; j++)
+            char[] str = new char[6];
+            // 下左右文字数制限の６文字
+            for (int j = 0; j < 6; j++)
             {
                 // たてか横かを判定
                 if(i == 0)
                 {
-                    // たて
-                    // fieldの範囲外にならないように
-                    if(Pos.x + j > 0 && Pos.x + j <= 6)
-                    {
-                        str[Pos.x + j - 1] = fieldChar[Pos.y - 1, Pos.x + j];
-                        //Debug.Log("横 = " + (j + 5));
-                    }
+                    // 横
+                    //Debug.Log("横 = " + (j));
+                    str[j] = fieldChar[Pos.y - 1, j + 1];
                 }
                 else
                 {
-                    // よこ
+                    // たて
                     // fieldの範囲外にならないように
-                    if(Pos.y + j > 0 && Pos.y + j <= 20)
+                    if(Pos.y + j <= 20)
                     {
-                        //Debug.Log("縦 = " + j +", "+ Pos.y + "," + (j + 5));
-                        str[j + 5] = fieldChar[Pos.y - 1 + j, Pos.x - 1];
+                        Debug.Log("縦 = " + (Pos.y + j - 1) + ", "+ (Pos.x - 1) + ",");
+                        str[j] = fieldChar[Pos.y + j - 1, Pos.x - 1];
                     }
                 }
             }
             Debug.Log(new string(str));
             for(int j = 0; j < library.words.Length; j++)
             {
-                // TODO: 完成した単語の検索（位置？言葉？完成した単語のブロックの位置がわからないといけない）
                 //始めの位置を探す
                 string searchWord = library.words[j].word;
                 string s = new string(str);
