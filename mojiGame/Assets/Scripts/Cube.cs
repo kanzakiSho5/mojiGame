@@ -18,14 +18,17 @@ public class Cube : MonoBehaviour
     public char blockChar;
 
     private InputManager inputMan;
+    private GameManager gameMan;
     private const float DeleteTime = 5.0f;
     private float FixedTime = 0;
 
     private void OnEnable()
     {
         isFixed = false;
+        // TODO: Positionを[1,0]が原点になっているのを[0,0]に変更
         Pos = new Vector2Int(4, 0);
         inputMan = InputManager.Instance;
+        gameMan = GameManager.Instance;
         gameObject.transform.position = new Vector3(Pos.x, (20 - Pos.y), 0);
         isMovable = true;
         SetChar(true);
@@ -40,9 +43,8 @@ public class Cube : MonoBehaviour
 
     private void DeleteBlock()
     {
-        // TODO: GameManagerのFieldも修正しないといけない
-        if (GameManager.Instance.currentTime - FixedTime >= DeleteTime)
-            Destroy(gameObject);
+        if (gameMan.currentTime - FixedTime >= DeleteTime)
+            gameMan.DestroyBlockByPos(Pos);
 
     }
 
@@ -108,17 +110,17 @@ public class Cube : MonoBehaviour
     {
         if(isMovable)
         {
-            if (inputMan.BtnLeftDown && GameManager.Instance.isBlockByPos(-1, 0))
+            if (inputMan.BtnLeftDown && gameMan.isBlockByPos(-1, 0))
             {
                 Pos.x--;
                 UpdatePos();
             }
-            else if (inputMan.BtnRightDown && GameManager.Instance.isBlockByPos(1, 0))
+            else if (inputMan.BtnRightDown && gameMan.isBlockByPos(1, 0))
             {
                 Pos.x++;
                 UpdatePos();
             }
-            else if (inputMan.BtnDownDown && GameManager.Instance.isBlockByPos())
+            else if (inputMan.BtnDownDown && gameMan.isBlockByPos())
             {
                 Pos.y++;
                 UpdatePos();
@@ -141,7 +143,7 @@ public class Cube : MonoBehaviour
     public void FixedBlock()
     {
         isMovable = false;
-        FixedTime = GameManager.Instance.currentTime;
+        FixedTime = gameMan.currentTime;
     }
 
     /// <summary>

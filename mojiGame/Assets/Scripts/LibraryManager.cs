@@ -19,7 +19,7 @@ public class LibraryManager : MonoBehaviour
         {
             string JsonStr = reader.ReadToEnd();
             library = Library.CreateFromJson(JsonStr);
-            Debug.Log(library.words[0].word);
+            //Debug.Log(library.words[0].word);
         }
     }
 
@@ -30,6 +30,7 @@ public class LibraryManager : MonoBehaviour
     /// <param name="Pos">検索する原点</param>
     public FindedWordAndPos[] FindWordByPos(Vector2Int Pos)
     {
+        // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
         char[,] fieldChar = GameManager.Instance.fieldChar;
         List<FindedWordAndPos> ret = new List<FindedWordAndPos>();
         for(int i = 0; i < 2; i++)
@@ -56,7 +57,7 @@ public class LibraryManager : MonoBehaviour
                     }
                 }
             }
-            Debug.Log(new string(str));
+            //Debug.Log(new string(str));
             for(int j = 0; j < library.words.Length; j++)
             {
                 //始めの位置を探す
