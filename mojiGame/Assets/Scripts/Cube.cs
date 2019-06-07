@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -7,9 +7,10 @@ public class Cube : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI text;
-    private bool isMovable;
-
-    public bool isFixed { get; protected set; }
+    
+    [SerializeField]
+    public bool isMovable;
+    public bool isCreatedWord { get; protected set; }
 
     [System.NonSerialized]
     public Vector2Int Pos;
@@ -31,6 +32,7 @@ public class Cube : MonoBehaviour
         gameMan = GameManager.Instance;
         gameObject.transform.position = new Vector3(Pos.x, (20 - Pos.y), 0);
         isMovable = true;
+        isCreatedWord = false;
         SetChar(true);
     }
 
@@ -61,7 +63,7 @@ public class Cube : MonoBehaviour
     {
         if(DropItem)
         {
-            int rand = Random.Range(0, 8);
+            int rand = Random.Range(0, 6);
             char ret;
             switch(rand)
             {
@@ -69,24 +71,18 @@ public class Cube : MonoBehaviour
                     ret = 'め';
                     break;
                 case 1:
-                    ret = 'め';
-                    break;
-                case 2:
                     ret = 'た';
                     break;
-                case 3:
+                case 2:
                     ret = 'ぁ';
                     break;
-                case 4:
+                case 3:
                     ret = 'く';
                     break;
+                case 4:
+                    ret = 'ぱ';
+                    break;
                 case 5:
-                    ret = 'ぱ';
-                    break;
-                case 6:
-                    ret = 'ぱ';
-                    break;
-                case 7:
                     ret = 'ん';
                     break;
                 default:
@@ -145,7 +141,6 @@ public class Cube : MonoBehaviour
         isMovable = false;
         FixedTime = gameMan.currentTime;
     }
-
     /// <summary>
     /// ブロックが文字ができた時
     /// </summary>
