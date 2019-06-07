@@ -25,7 +25,7 @@ public class Cube : MonoBehaviour
 
     private void OnEnable()
     {
-        isFixed = false;
+        isCreatedWord = false;
         // TODO: Positionを[1,0]が原点になっているのを[0,0]に変更
         Pos = new Vector2Int(4, 0);
         inputMan = InputManager.Instance;
@@ -39,7 +39,7 @@ public class Cube : MonoBehaviour
     private void Update()
     {
         Move();
-        if (!isMovable && !isFixed)
+        if (!isMovable && !isCreatedWord)
             DeleteBlock();
     }
 
@@ -146,7 +146,7 @@ public class Cube : MonoBehaviour
     /// </summary>
     public void CreatedWord()
     {
-        isFixed = true;
+        isCreatedWord = true;
         text.color = Color.red;
     }
 }
