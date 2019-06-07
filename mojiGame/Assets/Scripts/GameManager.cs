@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
 
                     Cube cube = fieldCube[currentMovableCube.Pos.y + Pos.y + j - 1, Pos.x - 2];
                     if (cube != null)
-                        if (!cube.isFixed)
+                        if (!cube.isMovable)
                             fieldCube[currentMovableCube.Pos.y + Pos.y + j - 1, Pos.x - 2].CreatedWord();
                 }
                 else
@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
 
                     Cube cube = fieldCube[Pos.y - 1, Pos.x + j];
                     if (cube != null)
-                        if (!cube.isFixed)
+                        if (!cube.isMovable)
                             fieldCube[Pos.y - 1, Pos.x + j].CreatedWord();
                 }
             }
