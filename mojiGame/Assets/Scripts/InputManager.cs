@@ -7,12 +7,12 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance;
 
     #region Input Paramater
-    public bool BtnEnterDown {get; protected set;}
-    public bool BtnCanselDown {get; protected set;}
-    public bool BtnRightDown {get; protected set;}
-    public bool BtnLeftDown {get; protected set;}
-    public bool BtnUpDown {get; protected set;}
-    public bool BtnDownDown {get; protected set;}
+    public bool BtnEnterDown    {get; protected set;}
+    public bool BtnCanselDown   {get; protected set;}
+    public bool BtnRightDown    {get; protected set;}
+    public bool BtnLeftDown     {get; protected set;}
+    public bool BtnUpDown       {get; protected set;}
+    public bool BtnDownDown     {get; protected set;}
     #endregion
 
     private void Awake()

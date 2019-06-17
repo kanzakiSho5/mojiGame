@@ -6,20 +6,16 @@ using UnityEngine;
 public class LibraryManager : MonoBehaviour
 {
 
-    Library library;
+    static Library library;
 
-    public static LibraryManager Instance;
 
     private void Awake()
     {
-        if(Instance == null)
-            Instance = this;
-
-        using (var reader = new StreamReader(Application.streamingAssetsPath + "/Library.json", System.Text.Encoding.UTF8))
+        using (var reader = new StreamReader(Application.streamingAssetsPath + "/Library.txt", System.Text.Encoding.UTF8))
         {
             string JsonStr = reader.ReadToEnd();
             library = Library.CreateFromJson(JsonStr);
-            //Debug.Log(library.words[0].word);
+            Debug.Log(library.words[176].mean);
         }
     }
 
@@ -28,10 +24,10 @@ public class LibraryManager : MonoBehaviour
     /// </summary>
     /// <returns>見つけた単語と位置</returns>
     /// <param name="Pos">検索する原点</param>
-    public FindedWordAndPos[] FindWordByPos(Vector2Int Pos)
+    public static FindedWordAndPos[] FindWordByPos(Vector2Int Pos)
     {
         // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
-        char[,] fieldChar = GameManager.Instance.fieldChar;
+        char[,] fieldChar = CubeManager.Instance.fieldChar;
         List<FindedWordAndPos> ret = new List<FindedWordAndPos>();
         for(int i = 0; i < 2; i++)
         {
@@ -44,7 +40,7 @@ public class LibraryManager : MonoBehaviour
                 {
                     // 横
                     //Debug.Log("横 = " + (j));
-                    str[j] = fieldChar[Pos.y - 1, j + 1];
+                    str[j] = fieldChar[Pos.y, j + 1];
                 }
                 else
                 {
@@ -52,8 +48,8 @@ public class LibraryManager : MonoBehaviour
                     // fieldの範囲外にならないように
                     if(Pos.y + j <= 20)
                     {
-                        Debug.Log("縦 = " + (Pos.y + j - 1) + ", "+ (Pos.x - 1) + ",");
-                        str[j] = fieldChar[Pos.y + j - 1, Pos.x - 1];
+                        Debug.Log("縦 = " + (Pos.y + j) + ", "+ (Pos.x + 1) + ",");
+                        str[j] = fieldChar[Pos.y + j, Pos.x + 1];
                     }
                 }
             }
@@ -68,9 +64,9 @@ public class LibraryManager : MonoBehaviour
                 {
                     // タテヨコ判定
                     if (i == 0)
-                        ret.Add(new FindedWordAndPos(library.words[j], new Vector2Int(foundIndex, Pos.y)));
+                        ret.Add(new FindedWordAndPos(library.words[j], new Vector2Int(foundIndex, Pos.y), true));
                     else
-                        ret.Add(new FindedWordAndPos(library.words[j], new Vector2Int(Pos.x, foundIndex)));
+                        ret.Add(new FindedWordAndPos(library.words[j], new Vector2Int(Pos.x, foundIndex), false));
 
                     //次の検索開始位置
                     int nextIndex = foundIndex + searchWord.Length;
@@ -100,11 +96,13 @@ public class FindedWordAndPos
 {
     public Word Word;
     public Vector2Int Position;
+    public bool isHorizontal;
 
-    public FindedWordAndPos(Word word, Vector2Int position)
+    public FindedWordAndPos(Word word, Vector2Int position,bool isHorizontal)
     {
         this.Word = word;
         this.Position = position;
+        this.isHorizontal = isHorizontal;
     }
 }
 

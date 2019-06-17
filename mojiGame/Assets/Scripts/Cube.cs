@@ -12,25 +12,24 @@ public class Cube : MonoBehaviour
     public bool isMovable;
     public bool isCreatedWord { get; protected set; }
 
-    [System.NonSerialized]
+
+    [SerializeField]
     public Vector2Int Pos;
     
     [System.NonSerialized]
     public char blockChar;
 
     private InputManager inputMan;
-    private GameManager gameMan;
-    private const float DeleteTime = 5.0f;
+    private CubeManager cubeMan;
+    private const float DeleteTime = 20.0f;
     private float FixedTime = 0;
 
     private void OnEnable()
     {
-        isCreatedWord = false;
-        // TODO: Positionを[1,0]が原点になっているのを[0,0]に変更
         Pos = new Vector2Int(4, 0);
         inputMan = InputManager.Instance;
-        gameMan = GameManager.Instance;
-        gameObject.transform.position = new Vector3(Pos.x, (20 - Pos.y), 0);
+        cubeMan = CubeManager.Instance;
+        gameObject.transform.localPosition = new Vector3(Pos.x, (20 - Pos.y), 0);
         isMovable = true;
         isCreatedWord = false;
         SetChar(true);
@@ -45,14 +44,13 @@ public class Cube : MonoBehaviour
 
     private void DeleteBlock()
     {
-        if (gameMan.currentTime - FixedTime >= DeleteTime)
-            gameMan.DestroyBlockByPos(Pos);
-
+        if (cubeMan.currentTime - FixedTime >= DeleteTime)
+            cubeMan.DestroyBlockByPos(Pos);
     }
 
     private void UpdatePos()
     {
-        gameObject.transform.position = new Vector3(Pos.x, (20 - Pos.y), 0);
+        gameObject.transform.localPosition = new Vector3(Pos.x, (20 - Pos.y), 0);
     }
 
     /// <summary>
@@ -74,7 +72,7 @@ public class Cube : MonoBehaviour
                     ret = 'た';
                     break;
                 case 2:
-                    ret = 'ぁ';
+                    ret = 'あ';
                     break;
                 case 3:
                     ret = 'く';
@@ -106,17 +104,17 @@ public class Cube : MonoBehaviour
     {
         if(isMovable)
         {
-            if (inputMan.BtnLeftDown && gameMan.isBlockByPos(-1, 0))
+            if (inputMan.BtnLeftDown && cubeMan.isBlockByPos(-1, 0))
             {
                 Pos.x--;
                 UpdatePos();
             }
-            else if (inputMan.BtnRightDown && gameMan.isBlockByPos(1, 0))
+            else if (inputMan.BtnRightDown && cubeMan.isBlockByPos(1, 0))
             {
                 Pos.x++;
                 UpdatePos();
             }
-            else if (inputMan.BtnDownDown && gameMan.isBlockByPos())
+            else if (inputMan.BtnDownDown && cubeMan.isBlockByPos())
             {
                 Pos.y++;
                 UpdatePos();
@@ -139,14 +137,21 @@ public class Cube : MonoBehaviour
     public void FixedBlock()
     {
         isMovable = false;
-        FixedTime = gameMan.currentTime;
+        FixedTime = cubeMan.currentTime;
     }
+
     /// <summary>
     /// ブロックが文字ができた時
     /// </summary>
-    public void CreatedWord()
+    /// <returns><c>true</c>, if word was createded, <c>false</c> otherwise.</returns>
+    public bool CreatedWord()
     {
+        if (isCreatedWord)
+            return false;
+
         isCreatedWord = true;
         text.color = Color.red;
+
+        return true;
     }
 }
