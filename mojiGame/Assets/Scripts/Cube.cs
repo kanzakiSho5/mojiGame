@@ -126,8 +126,47 @@ public class Cube : MonoBehaviour
                 Pos.y++;
                 UpdatePos();
             }
+            else if (inputMan.BtnUpDown && cubeMan.isBlockByPos())
+            {
+                print("Harddrop");
+                StartCoroutine(HardDrop());
+            }
         }
     }
+
+    /// <summary>
+    /// 動かないようにする。
+    /// </summary>
+    private void FixedBlock()
+    {
+        isMovable = false;
+        FixedTime = cubeMan.currentTime;
+    }
+
+    private void FixedEffects()
+    {
+        StartCoroutine(FixedEffect());
+    }
+
+    IEnumerator HardDrop()
+    {
+        while(cubeMan.isBlockByPos())
+        {
+            print("Down");
+            Pos.y++;
+            UpdatePos();
+            yield return null;
+        }
+        cubeMan.FixedCurrentCube();
+    }
+
+    IEnumerator FixedEffect()
+    {
+        GameObject obj = Instantiate<GameObject>(Effect, transform.position, Quaternion.identity, this.transform);
+        yield return new WaitForSeconds(1f);
+        Destroy(obj);
+    }
+
 
     /// <summary>
     /// 1ブロック分下げる
@@ -136,15 +175,6 @@ public class Cube : MonoBehaviour
     {
         Pos.y++;
         UpdatePos();
-    }
-
-    /// <summary>
-    /// 動かないようにする。
-    /// </summary>
-    public void FixedBlock()
-    {
-        isMovable = false;
-        FixedTime = cubeMan.currentTime;
     }
 
     /// <summary>

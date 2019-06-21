@@ -66,22 +66,16 @@ public class CubeManager : MonoBehaviour
 
     private void Update()
     {
+        // 時間を更新
+        UpdateTime();
+
         // ブロックを固定
-        if(currentFixTime > blockFixSpeed)
+        if (currentFixTime > blockFixSpeed)
         {
-            currentFixTime = 0f;
-            currentMovableCube.FixedBlock();
-            // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
-            fieldChar[currentMovableCube.Pos.y, currentMovableCube.Pos.x + 1] = currentMovableCube.blockChar;
-            fieldCube[currentMovableCube.Pos.y, currentMovableCube.Pos.x] = currentMovableCube;
-            FindedWordAndPos[] findedWords = LibraryManager.FindWordByPos(currentMovableCube.Pos);
-            Debug.Log("findedWords = "+ findedWords.Length);
-            // 完成した単語を検索して文字を赤くする
-            CreatedWordSetScore(findedWords);
-            PrintField();
-            currentMovableCube = Instantiate(blockPrefab,transform).GetComponent<Cube>();
+            FixedCurrentCube();
         }
 
+        // ブロックを自由落下
         if(currentDownTime > blockDownSpeed)
         {
             currentDownTime = 0f;
@@ -89,7 +83,6 @@ public class CubeManager : MonoBehaviour
                 currentMovableCube.DropBlock();
         }
 
-        UpdateTime();
     }
 
     private void UpdateTime()
@@ -102,36 +95,6 @@ public class CubeManager : MonoBehaviour
             if (!isBlockByPos())
                 currentFixTime += Time.deltaTime;
         }
-    }
-
-    /// <summary>
-    /// 指定された位置のブロックを消す
-    /// </summary>
-    /// <param name="Position">消すブロックの座標</param>
-    public void DestroyBlockByPos(Vector2Int Position)
-    {
-        // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
-        print("Position = [" + (Position.x) + ", " + (Position.y) + "]" );
-        Destroy(fieldCube[Position.y, Position.x].gameObject);
-        // 消したブロックの上のブロックたちを一つ下にずらす。
-        for (int i = Position.y; i > 0; i--)
-        {
-            print("Chenge FieldChar [" + i + ", " + (Position.x + 1) + "] = " + fieldChar[i, (Position.x + 1)]);
-            fieldChar[i, Position.x + 1] = fieldChar[i - 1, Position.x + 1];
-
-            Debug.Log("fieldCube[" + i + ", " + Position.x + "] = " +
-                fieldCube[i, Position.x].blockChar);
-
-            fieldCube[i, Position.x] = fieldCube[i - 1, Position.x];
-
-            //もし上のブロックがなくなったら終わる
-            if (fieldChar[i, Position.x + 1] == '0')
-                break;
-
-            fieldCube[i, Position.x].DropBlock();
-        }
-
-        PrintField();
     }
 
     /// <summary>
@@ -174,8 +137,7 @@ public class CubeManager : MonoBehaviour
                     {
                         if (!cube.isMovable)
                         {
-                            cube.CreatedWord();
-                            isCreatWord = true;
+                            isCreatWord = cube.CreatedWord();
                         }
                     }
                 }
@@ -253,6 +215,36 @@ public class CubeManager : MonoBehaviour
     #region public Method
 
     /// <summary>
+    /// 指定された位置のブロックを消す
+    /// </summary>
+    /// <param name="Position">消すブロックの座標</param>
+    public void DestroyBlockByPos(Vector2Int Position)
+    {
+        // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
+        print("Position = [" + (Position.x) + ", " + (Position.y) + "]");
+        Destroy(fieldCube[Position.y, Position.x].gameObject);
+        // 消したブロックの上のブロックたちを一つ下にずらす。
+        for (int i = Position.y; i > 0; i--)
+        {
+            print("Chenge FieldChar [" + i + ", " + (Position.x + 1) + "] = " + fieldChar[i, (Position.x + 1)]);
+            fieldChar[i, Position.x + 1] = fieldChar[i - 1, Position.x + 1];
+
+            Debug.Log("fieldCube[" + i + ", " + Position.x + "] = " +
+                fieldCube[i, Position.x].blockChar);
+
+            fieldCube[i, Position.x] = fieldCube[i - 1, Position.x];
+
+            //もし上のブロックがなくなったら終わる
+            if (fieldChar[i, Position.x + 1] == '0')
+                break;
+
+            fieldCube[i, Position.x].DropBlock();
+        }
+
+        PrintField();
+    }
+
+    /// <summary>
     /// 座標にブロックがあるかどうかを調べる
     /// </summary>
     public bool isBlockByPos(int Horizontal = 0, int Vertical = 1)
@@ -262,5 +254,22 @@ public class CubeManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// currentCubeを固定して次のCubeを生成する。
+    /// </summary>
+    public void FixedCurrentCube()
+    {
+        currentFixTime = 0f;
+        currentMovableCube.OnFixedEnter();
+        // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
+        fieldChar[currentMovableCube.Pos.y, currentMovableCube.Pos.x + 1] = currentMovableCube.blockChar;
+        fieldCube[currentMovableCube.Pos.y, currentMovableCube.Pos.x] = currentMovableCube;
+        FindedWordAndPos[] findedWords = LibraryManager.FindWordByPos(currentMovableCube.Pos);
+        Debug.Log("findedWords = " + findedWords.Length);
+        // 完成した単語を検索して文字を赤くする
+        CreatedWordSetScore(findedWords);
+        PrintField();
+        currentMovableCube = Instantiate(blockPrefab, transform).GetComponent<Cube>();
+    }
     #endregion
 }
