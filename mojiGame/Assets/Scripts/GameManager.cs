@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = false;
         ClearObj.SetActive(true);
+
+        sceneCon.MoveNextStage();
     }
 
     public void createdWord(Word word)

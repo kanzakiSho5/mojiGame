@@ -8,16 +8,27 @@ public enum CrearType
     WordLength
 }
 
+public enum SceneType
+{
+    Start,
+    Game,
+    Pause,
+    Clear
+}
+
 public class SceneController : MonoBehaviour
 {
     [SerializeField]
     ClearTerm[] clearTerm;
+
+    public SceneType CurrentScene { get; protected set; } 
 
     GameManager gameMan;
 
     public void Start()
     {
         gameMan = GameManager.Instance;
+        CurrentScene = SceneType.Start;
     }
 
     public ClearTerm CurrentClearTermByStage(int Stage)
@@ -33,15 +44,42 @@ public class SceneController : MonoBehaviour
         {
             case CrearType.Score:
                 if (gameMan.score >= clearTerm[stage].value)
+                {
+                    CurrentScene = SceneType.Clear;
                     return true;
+                }
                 break;
             case CrearType.WordLength:
                 if (gameMan.createdWordLength >= clearTerm[stage].value)
+                {
+                    CurrentScene = SceneType.Clear;
                     return true;
+                }
                 break;
         }
 
         return false;
+    }
+
+    public void MoveNextStage()
+    {
+        /*
+         * TODO: ステージの切り替えのアニメーションをChinemashineをつくる
+         * 
+        iTween.MoveTo(gameObject, iTween.Hash(
+            "x", -transform.position.z,
+            "y", transform.position.y + 15f,
+            "z", transform.position.x,
+            "time", 2f,
+            "delay", .5f
+            ));
+
+        iTween.RotateAdd(gameObject, iTween.Hash(
+            "y", -90f,
+            "time", 2f,
+            "delay", .5f
+            ));
+        */           
     }
 
 }
