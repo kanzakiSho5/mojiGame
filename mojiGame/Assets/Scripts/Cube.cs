@@ -7,6 +7,8 @@ public class Cube : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI text;
+    [SerializeField]
+    private GameObject Effect;
     
     [SerializeField]
     public bool isMovable;
@@ -24,15 +26,20 @@ public class Cube : MonoBehaviour
     private const float DeleteTime = 20.0f;
     private float FixedTime = 0;
 
+    public delegate void FixedEnter();
+    public FixedEnter OnFixedEnter;
+
     private void OnEnable()
     {
         Pos = new Vector2Int(4, 0);
         inputMan = InputManager.Instance;
         cubeMan = CubeManager.Instance;
-        gameObject.transform.localPosition = new Vector3(Pos.x, (20 - Pos.y), 0);
+        gameObject.transform.localPosition = new Vector3(Pos.x, (20 - Pos.y), Random.Range(0f, .7f));
         isMovable = true;
         isCreatedWord = false;
         SetChar(true);
+        OnFixedEnter += FixedBlock;
+        OnFixedEnter += FixedEffects;
     }
 
     private void Update()
@@ -50,7 +57,7 @@ public class Cube : MonoBehaviour
 
     private void UpdatePos()
     {
-        gameObject.transform.localPosition = new Vector3(Pos.x, (20 - Pos.y), 0);
+        gameObject.transform.localPosition = new Vector3(Pos.x, (20 - Pos.y), this.transform.localPosition.z);
     }
 
     /// <summary>

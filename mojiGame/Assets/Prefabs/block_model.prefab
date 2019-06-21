@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3793192404261543465}
+  Effect: {fileID: 6146818520825932838, guid: d3689727d804c4111a237d339c59d373, type: 3}
   isMovable: 0
   Pos: {x: 0, y: 0}
 --- !u!1 &3073806026672449777
