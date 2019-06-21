@@ -31,7 +31,7 @@ public class Cube : MonoBehaviour
 
     private void OnEnable()
     {
-        Pos = new Vector2Int(4, 0);
+        Pos = new Vector2Int(3, 4);
         inputMan = InputManager.Instance;
         cubeMan = CubeManager.Instance;
         gameObject.transform.localPosition = new Vector3(Pos.x, (20 - Pos.y), Random.Range(0f, .7f));
