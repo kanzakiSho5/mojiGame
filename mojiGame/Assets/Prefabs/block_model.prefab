@@ -261,8 +261,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\u3042"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3f182245ce6bf5644bad62ec4c953279, type: 2}
-  m_sharedMaterial: {fileID: 21450693515805268, guid: 3f182245ce6bf5644bad62ec4c953279,
+  m_fontAsset: {fileID: 11400000, guid: f8e1341658f9a00488819e1a5b326137, type: 2}
+  m_sharedMaterial: {fileID: 21450693515805268, guid: f8e1341658f9a00488819e1a5b326137,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
