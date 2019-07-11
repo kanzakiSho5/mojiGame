@@ -139,6 +139,7 @@ public class Cube : MonoBehaviour
     /// </summary>
     private void FixedBlock()
     {
+        print("FixedBlock");
         isMovable = false;
         FixedTime = cubeMan.currentTime;
     }
@@ -152,11 +153,13 @@ public class Cube : MonoBehaviour
     {
         while(cubeMan.isBlockByPos())
         {
+            if (!isMovable) yield break;
             print("Down");
             Pos.y++;
             UpdatePos();
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
+        print("EndHardDrop");
         cubeMan.FixedCurrentCube();
     }
 

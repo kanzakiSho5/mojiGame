@@ -13,7 +13,9 @@ public class CubeManager : MonoBehaviour
     float blockDownSpeed = 2f;                      // ブロックの落ちるスピード
     [SerializeField]
     float blockFixSpeed = .5f;                      // ブロックが固定される時間
-
+    [Header("StageObj")]
+    [SerializeField]
+    private Transform[] StagePoint;
     public char[,] fieldChar {get; protected set;} = new char[21,8];     // フィールドにブロックが置かれているかどうか 0:なし その他:あり
     private Cube[,] fieldCube = new Cube[20, 6];
 
@@ -55,13 +57,14 @@ public class CubeManager : MonoBehaviour
     #region private Method
     private void Awake()
     {
-        init();
+        if (Instance == null)
+            Instance = this;
     }
 
     private void Start()
     {
         gameMan = GameManager.Instance;
-        currentMovableCube = Instantiate(blockPrefab,transform).GetComponent<Cube>();
+        SceneController.StartGameEvent += new SceneController.ChengeGameEventHandler(init);
     }
 
     private void Update()
@@ -154,10 +157,7 @@ public class CubeManager : MonoBehaviour
     /// </summary>
     private void init()
     {
-        if(Instance == null)
-            Instance = this;
-
-
+        print("CubeManager inited!");
         // fieldCharの初期化
         for (int i = 0; i < fieldChar.GetLength(0); i++)
         {
@@ -169,11 +169,21 @@ public class CubeManager : MonoBehaviour
             }
         }
 
-        
-        
+        //前のステージのCubeを全削除
+        if (gameMan.stage != 0)
+        {
+            foreach (Transform n in StagePoint[gameMan.stage - 1])
+            {
+                Destroy(n.gameObject);
+            }
+        }
+        fieldCube = new Cube[20, 6];
+
         currentTime = 0;
         currentFixTime = 0;
         currentDownTime = 0;
+
+        currentMovableCube = Instantiate<GameObject>(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
 
         PrintField();
     }
@@ -269,7 +279,7 @@ public class CubeManager : MonoBehaviour
         // 完成した単語を検索して文字を赤くする
         CreatedWordSetScore(findedWords);
         PrintField();
-        currentMovableCube = Instantiate(blockPrefab, transform).GetComponent<Cube>();
+        currentMovableCube = Instantiate(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
     }
     #endregion
 }

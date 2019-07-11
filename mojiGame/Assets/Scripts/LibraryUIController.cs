@@ -12,9 +12,5 @@ public class LibraryUIController : MonoBehaviour
         MeanText = gameObject.GetComponent<TextMeshProUGUI>();
     }
 
-    public void ViewMeanByWord(Word word)
-    {
-        print(word.word + "\n\n" + word.mean);
-        MeanText.SetText(word.word + "\n\n" + word.mean);
-    }
+    
 }

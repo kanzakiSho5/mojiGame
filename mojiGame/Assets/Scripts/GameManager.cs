@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance;
+
 	public int score { get; protected set; } = 0;
 	public int stage { get; protected set; } = 0;
 	public int createdWordLength { get; protected set; } = 0;
@@ -22,9 +24,10 @@ public class GameManager : MonoBehaviour
 	private CameraManager cameraCon;
 	[SerializeField]
 	private PlayerController playerCon;
-	[Header("UIs")]
-	[SerializeField]
-	private GameObject ClearObj;
+    [SerializeField]
+    private UIManager UICon;
+
+    
 	
 
 	private void Awake()
@@ -40,6 +43,9 @@ public class GameManager : MonoBehaviour
 
 		if (!libraryUICon)
 			Debug.LogError("LibraryUIController is NotFound");
+        
+        SceneController.StartGameEvent += new SceneController.ChengeGameEventHandler(GameStart);
+        SceneController.StartClearEvent += new SceneController.ChengeClearEventHandler(GameClear);
 
 		init();
 	}
@@ -50,6 +56,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(InputManager.Instance.BtnEnterDown)
 			{
+                print("NextStage");
 				stage++;
 				cameraCon.StageCameraAllOff();
 				sceneCon.MoveNextScene();
@@ -60,20 +67,18 @@ public class GameManager : MonoBehaviour
 
 	private void init()
 	{
-		ClearObj.SetActive(false);
-		scoreCon.SetScoreText(0);
-		GameStart();
 	}
 
 	private void GameStart()
 	{
-		isPlaying = true;
+        scoreCon.SetScoreText(0);
+        cameraCon.MoveStageCamera(stage);
+        isPlaying = true;
 	}
 
 	private void GameClear()
 	{
 		isPlaying = false;
-		ClearObj.SetActive(true);
 
 		playerCon.ClearStage(stage);
 	}
@@ -83,20 +88,16 @@ public class GameManager : MonoBehaviour
 		createdWordLength = word.word.Length;
 		score += createdWordLength * 1000;
 		scoreCon.SetScoreText(score);
-		libraryUICon.ViewMeanByWord(word);
-		if (sceneCon.CheckClear())
-			GameClear();
-	}
+		UICon.ViewMeanByWord(word);
+        sceneCon.CheckClear();
 
-	public void ChengeStage()
-	{
-		// TODO: カメラが次のステージに移動した時、CubeManagerの位置を移動する.
-	}
+    }
+    
 
 
 	public void StageMoveAnimationEnded()
 	{
-		cameraCon.MoveStageCamera(stage);
+        sceneCon.StartGame();
 	}
 
 }

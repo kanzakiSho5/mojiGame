@@ -26,7 +26,16 @@ public class SceneController : MonoBehaviour
 
 	GameManager gameMan;
 
-	public void Start()
+    public delegate void ChengeGameEventHandler();
+    public static event ChengeGameEventHandler StartGameEvent;
+
+    public delegate void ChengeClearEventHandler();
+    public static event ChengeClearEventHandler StartClearEvent;
+
+    public delegate void ChengeNextStageEventHandler();
+    public static event ChengeNextStageEventHandler StartNextStageEvent;
+
+    private void Start()
 	{
 		gameMan = GameManager.Instance;
 		CurrentScene = SceneType.Start;
@@ -37,7 +46,7 @@ public class SceneController : MonoBehaviour
 		return clearTerm[Stage];
 	}
 
-	public bool CheckClear()
+	public void CheckClear()
 	{
 
 		int stage = gameMan.stage;
@@ -47,28 +56,33 @@ public class SceneController : MonoBehaviour
 				if (gameMan.score >= clearTerm[stage].value)
 				{
 					CurrentScene = SceneType.Clear;
-					return true;
+                    StartClearEvent();
 				}
 				break;
 			case CrearType.WordLength:
 				if (gameMan.createdWordLength >= clearTerm[stage].value)
 				{
 					CurrentScene = SceneType.Clear;
-					return true;
+                    StartClearEvent();
 				}
 				break;
 		}
-
-		return false;
+        
 	}
 
-	/// <summary>
-	/// CurrentSceneをNextStageに変更する
-	/// (Animationを再生する)
-	/// </summary>
-	public void MoveNextScene()
-	{
-		CurrentScene = SceneType.NextStage;
+    public void StartGame()
+    {
+        StartGameEvent();
+    }
+
+    /// <summary>
+    /// CurrentSceneをNextStageに変更する
+    /// (Animationを再生する)
+    /// </summary>
+    public void MoveNextScene()
+    {
+        CurrentScene = SceneType.NextStage;
+        StartNextStageEvent();
 	}
 
 }
