@@ -36,3 +36,19 @@ sysinfo.txt
 *.unitypackage
 mojiGame/Assets/TextMesh Pro/
 mojiGame/Assets/Plugins
+mojiGame/Assets/Textures/Texture/Terrain/leaf-fall-unityb/About these PBR files.txt
+mojiGame/Assets/Textures/Texture/Terrain/leaf-fall-unityb/leaf-fall1-albedo.png
+mojiGame/Assets/Textures/Texture/Terrain/leaf-fall-unityb/leaf-fall1-ao.png
+mojiGame/Assets/Textures/Texture/Terrain/leaf-fall-unityb/leaf-fall1-metalness.psd
+mojiGame/Assets/Textures/Texture/Terrain/leaf-fall-unityb/leaf-fall3-normal-unity.png
+mojiGame/Assets/Textures/Texture/Terrain/mixedmoss-Unity/About these PBR files.txt
+mojiGame/Assets/Textures/Texture/Terrain/mixedmoss-Unity/mixedmoss-albedo2.png
+mojiGame/Assets/Textures/Texture/Terrain/mixedmoss-Unity/mixedmoss-ao2.png
+mojiGame/Assets/Textures/Texture/Terrain/mixedmoss-Unity/mixedmoss-height.png
+mojiGame/Assets/Textures/Texture/Terrain/mixedmoss-Unity/mixedmoss-metalness.psd
+mojiGame/Assets/Textures/Texture/Terrain/mixedmoss-Unity/mixedmoss-normal2-inverted.png
+mojiGame/Assets/Textures/Texture/Terrain/sandydrysoil-Unity/About these PBR files.txt
+mojiGame/Assets/Textures/Texture/Terrain/sandydrysoil-Unity/sandydrysoil-albedo2b.png
+mojiGame/Assets/Textures/Texture/Terrain/sandydrysoil-Unity/sandydrysoil-height.png
+mojiGame/Assets/Textures/Texture/Terrain/sandydrysoil-Unity/sandydrysoil-metalness.psd
+mojiGame/Assets/Textures/Texture/Terrain/sandydrysoil-Unity/sandydrysoil-normal.png
