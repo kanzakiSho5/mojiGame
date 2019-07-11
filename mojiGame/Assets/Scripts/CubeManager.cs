@@ -143,7 +143,7 @@ public class CubeManager : MonoBehaviour
                 }
                 if(isCreatWord)
                 {
-                    GameManager.Instance.createdWord(findedWords[i].Word);
+                    GameManager.Instance.ViewWord(findedWords[i].Word);
                 }
             }
         }

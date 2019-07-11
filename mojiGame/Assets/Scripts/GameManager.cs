@@ -4,67 +4,99 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-    public int score { get; protected set; } = 0;
-    public int stage { get; protected set; } = 0;
-    public int createdWordLength { get; protected set; } = 0;
+	public static GameManager Instance;
+	public int score { get; protected set; } = 0;
+	public int stage { get; protected set; } = 0;
+	public int createdWordLength { get; protected set; } = 0;
 
-    public bool isPlaying { get; protected set; } = false;
+	public bool isPlaying { get; protected set; } = false;
 
-    [Header("Classes")]
-    [SerializeField]
-    private ScoreController scoreCon;
-    [SerializeField]
-    private LibraryUIController libraryUICon;
-    [SerializeField]
-    private SceneController sceneCon;
-    [SerializeField]
-    private GameObject ClearObj;
+	[Header("Classes")]
+	[SerializeField]
+	private ScoreController scoreCon;
+	[SerializeField]
+	private LibraryUIController libraryUICon;
+	[SerializeField]
+	private SceneController sceneCon;
+	[SerializeField]
+	private CameraManager cameraCon;
+	[SerializeField]
+	private PlayerController playerCon;
+	[Header("UIs")]
+	[SerializeField]
+	private GameObject ClearObj;
+	
 
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-    }
+	private void Awake()
+	{
+		if (Instance == null)
+			Instance = this;
+	}
 
-    private void Start()
-    {
-        if (!scoreCon)
-            Debug.LogError("ScoreController is NotFound");
+	private void Start()
+	{
+		if (!scoreCon)
+			Debug.LogError("ScoreController is NotFound");
 
-        if (!libraryUICon)
-            Debug.LogError("LibraryUIController is NotFound");
+		if (!libraryUICon)
+			Debug.LogError("LibraryUIController is NotFound");
 
-        init();
-    }
+		init();
+	}
 
-    private void init()
-    {
-        ClearObj.SetActive(false);
-        scoreCon.SetScoreText(0);
-        GameStart();
-    }
+	private void Update()
+	{
+		if(sceneCon.CurrentScene == SceneType.Clear)
+		{
+			if(InputManager.Instance.BtnEnterDown)
+			{
+				stage++;
+				cameraCon.StageCameraAllOff();
+				sceneCon.MoveNextScene();
+				playerCon.ClearStage(stage);
+			}
+		}
+	}
 
-    private void GameStart()
-    {
-        isPlaying =true;
-    }
+	private void init()
+	{
+		ClearObj.SetActive(false);
+		scoreCon.SetScoreText(0);
+		GameStart();
+	}
 
-    private void GameClear()
-    {
-        isPlaying = false;
-        ClearObj.SetActive(true);
+	private void GameStart()
+	{
+		isPlaying = true;
+	}
 
-        sceneCon.MoveNextStage();
-    }
+	private void GameClear()
+	{
+		isPlaying = false;
+		ClearObj.SetActive(true);
 
-    public void createdWord(Word word)
-    {
-        createdWordLength = word.word.Length;
-        score += createdWordLength * 1000;
-        scoreCon.SetScoreText(score);
-        libraryUICon.ViewMeanByWord(word);
-        if(sceneCon.CheckClear())
-            GameClear();
-    }
+		playerCon.ClearStage(stage);
+	}
+
+	public void ViewWord(Word word)
+	{
+		createdWordLength = word.word.Length;
+		score += createdWordLength * 1000;
+		scoreCon.SetScoreText(score);
+		libraryUICon.ViewMeanByWord(word);
+		if (sceneCon.CheckClear())
+			GameClear();
+	}
+
+	public void ChengeStage()
+	{
+		// TODO: カメラが次のステージに移動した時、CubeManagerの位置を移動する.
+	}
+
+
+	public void StageMoveAnimationEnded()
+	{
+		cameraCon.MoveStageCamera(stage);
+	}
+
 }
