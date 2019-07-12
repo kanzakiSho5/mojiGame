@@ -153,8 +153,6 @@ public class Cube : MonoBehaviour
     {
         while(cubeMan.isBlockByPos())
         {
-            if (!isMovable) yield break;
-            print("Down");
             Pos.y++;
             UpdatePos();
             yield return new WaitForEndOfFrame();

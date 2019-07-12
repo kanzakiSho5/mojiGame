@@ -17,7 +17,16 @@ public class CameraManager : MonoBehaviour
 		StageCamera = gameObjects.ToArray();
 		print(StageCamera.Length);
 		StageCameraAllOff();
+        MoveStageCamera(3);
+
+        SceneController.StartNextStageEvent += StageCameraAllOff;
+        SceneController.StartStartEvent += MoveStartCamera;
 	}
+
+    private void MoveStartCamera()
+    {
+        MoveStageCamera(3);
+    }
 
 	public void StageCameraAllOff()
 	{

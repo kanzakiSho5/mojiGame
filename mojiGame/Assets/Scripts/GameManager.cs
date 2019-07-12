@@ -5,99 +5,107 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	public static GameManager Instance;
+    public static GameManager Instance;
 
-	public int score { get; protected set; } = 0;
-	public int stage { get; protected set; } = 0;
-	public int createdWordLength { get; protected set; } = 0;
+    public int score { get; protected set; } = 0;
+    public int stage { get; protected set; } = 0;
+    public int createdWordLength { get; protected set; } = 0;
 
-	public bool isPlaying { get; protected set; } = false;
+    public bool isPlaying { get; protected set; } = false;
 
-	[Header("Classes")]
-	[SerializeField]
-	private ScoreController scoreCon;
-	[SerializeField]
-	private LibraryUIController libraryUICon;
-	[SerializeField]
-	private SceneController sceneCon;
-	[SerializeField]
-	private CameraManager cameraCon;
-	[SerializeField]
-	private PlayerController playerCon;
+    [Header("Classes")]
+    [SerializeField]
+    private ScoreController scoreCon;
+    [SerializeField]
+    private LibraryUIController libraryUICon;
+    [SerializeField]
+    private SceneController sceneCon;
+    [SerializeField]
+    private CameraManager cameraCon;
+    [SerializeField]
+    private PlayerController playerCon;
     [SerializeField]
     private UIManager UICon;
 
-    
-	
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
 
-	private void Awake()
-	{
-		if (Instance == null)
-			Instance = this;
-	}
+    private void Start()
+    {
+        if (!scoreCon)
+            Debug.LogError("ScoreController is NotFound");
 
-	private void Start()
-	{
-		if (!scoreCon)
-			Debug.LogError("ScoreController is NotFound");
+        if (!libraryUICon)
+            Debug.LogError("LibraryUIController is NotFound");
 
-		if (!libraryUICon)
-			Debug.LogError("LibraryUIController is NotFound");
-        
-        SceneController.StartGameEvent += new SceneController.ChengeGameEventHandler(GameStart);
-        SceneController.StartClearEvent += new SceneController.ChengeClearEventHandler(GameClear);
+        SceneController.StartGameEvent += GameStart;
+        SceneController.StartClearEvent += GameClear;
+    }
 
-		init();
-	}
-
-	private void Update()
-	{
-		if(sceneCon.CurrentScene == SceneType.Clear)
-		{
-			if(InputManager.Instance.BtnEnterDown)
-			{
+    private void Update()
+    {
+        if (SceneController.CurrentScene == SceneType.Clear)
+        {
+            if (InputManager.Instance.BtnEnterDown)
+            {
                 print("NextStage");
-				stage++;
-				cameraCon.StageCameraAllOff();
-				sceneCon.MoveNextScene();
-				playerCon.ClearStage(stage);
-			}
-		}
-	}
+                stage++;
+                cameraCon.StageCameraAllOff();
+                sceneCon.ChengeNextScene();
+                playerCon.ClearStage(stage);
+            }
+        }
+    }
 
-	private void init()
-	{
-	}
+    public void Init()
+    {
+        playerCon.Init();
+        stage = 0;
+        score = 0;
+        isPlaying = false;
+    }
 
-	private void GameStart()
-	{
+    private void GameStart()
+    {
+        score = 0;
         scoreCon.SetScoreText(0);
         cameraCon.MoveStageCamera(stage);
         isPlaying = true;
-	}
-
-	private void GameClear()
-	{
-		isPlaying = false;
-
-		playerCon.ClearStage(stage);
-	}
-
-	public void ViewWord(Word word)
-	{
-		createdWordLength = word.word.Length;
-		score += createdWordLength * 1000;
-		scoreCon.SetScoreText(score);
-		UICon.ViewMeanByWord(word);
-        sceneCon.CheckClear();
-
     }
-    
+
+    private void GameClear()
+    {
+        isPlaying = false;
+
+        playerCon.ClearStage(stage);
+    }
+
+    public void ViewWord(Word word)
+    {
+        createdWordLength = word.word.Length;
+        score += createdWordLength * 1000;
+        scoreCon.SetScoreText(score);
+        UICon.ViewMeanByWord(word);
+        sceneCon.CheckClear();
+    }
+
+    public void ChengeStartScene()
+    {
+        sceneCon.ChengeStartScene();
+    }
+
+    public void ChengeNextScene()
+    {
+        sceneCon.ChengeNextScene();
+    }
 
 
-	public void StageMoveAnimationEnded()
-	{
-        sceneCon.StartGame();
-	}
+    public void StageMoveAnimationEnded()
+    {
+        sceneCon.ChengeGameScene();
+    }
 
 }

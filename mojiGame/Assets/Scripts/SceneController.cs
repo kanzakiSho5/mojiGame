@@ -22,9 +22,12 @@ public class SceneController : MonoBehaviour
 	[SerializeField]
 	ClearTerm[] clearTerm;
 
-	public SceneType CurrentScene { get; protected set; }
+	public static SceneType CurrentScene { get; protected set; }
 
 	GameManager gameMan;
+
+	public delegate void ChengeStartEventHandler();
+	public static event ChengeStartEventHandler StartStartEvent;
 
     public delegate void ChengeGameEventHandler();
     public static event ChengeGameEventHandler StartGameEvent;
@@ -35,10 +38,32 @@ public class SceneController : MonoBehaviour
     public delegate void ChengeNextStageEventHandler();
     public static event ChengeNextStageEventHandler StartNextStageEvent;
 
+	public delegate void ChengePauseEventHandler();
+	public static event ChengePauseEventHandler StartPauseEvent;
+
     private void Start()
 	{
 		gameMan = GameManager.Instance;
 		CurrentScene = SceneType.Start;
+		StartStartEvent();
+	}
+
+	private void Update()
+	{
+        print("CurrentScene = " + CurrentScene);
+		if(InputManager.Instance.BtnEscapeDown)
+		{
+			if (CurrentScene == SceneType.Game)
+			{
+				StartPauseEvent();
+				CurrentScene = SceneType.Pause;
+			}
+			else if(CurrentScene == SceneType.Pause)
+			{
+				StartGameEvent();
+				CurrentScene = SceneType.Game;
+			}
+		}
 	}
 
 	public ClearTerm CurrentClearTermByStage(int Stage)
@@ -70,21 +95,27 @@ public class SceneController : MonoBehaviour
         
 	}
 
-    public void StartGame()
+    public void ChengeStartScene()
     {
+        CurrentScene = SceneType.Start;
+        StartStartEvent();
+    }
+
+    public void ChengeGameScene()
+    {
+        CurrentScene = SceneType.Game;
         StartGameEvent();
     }
 
     /// <summary>
     /// CurrentSceneをNextStageに変更する
-    /// (Animationを再生する)
     /// </summary>
-    public void MoveNextScene()
+    public void ChengeNextScene()
     {
+
         CurrentScene = SceneType.NextStage;
         StartNextStageEvent();
 	}
-
 }
 
 [System.Serializable]

@@ -170,12 +170,10 @@ public class CubeManager : MonoBehaviour
         }
 
         //前のステージのCubeを全削除
-        if (gameMan.stage != 0)
+        print("reset Stage = " + ((gameMan.stage + 2) % 3));
+        foreach (Transform n in StagePoint[(gameMan.stage + 2) % 3])
         {
-            foreach (Transform n in StagePoint[gameMan.stage - 1])
-            {
-                Destroy(n.gameObject);
-            }
+            Destroy(n.gameObject);
         }
         fieldCube = new Cube[20, 6];
 
@@ -185,7 +183,7 @@ public class CubeManager : MonoBehaviour
 
         currentMovableCube = Instantiate<GameObject>(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
 
-        PrintField();
+        //PrintField();
     }
 
     /// <summary>
@@ -251,7 +249,7 @@ public class CubeManager : MonoBehaviour
             fieldCube[i, Position.x].DropBlock();
         }
 
-        PrintField();
+        //PrintField();
     }
 
     /// <summary>
@@ -278,7 +276,7 @@ public class CubeManager : MonoBehaviour
         Debug.Log("findedWords = " + findedWords.Length);
         // 完成した単語を検索して文字を赤くする
         CreatedWordSetScore(findedWords);
-        PrintField();
+        //PrintField();
         currentMovableCube = Instantiate(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
     }
     #endregion

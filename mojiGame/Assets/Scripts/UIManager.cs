@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    GameManager gameMan;
+
     [Header("Scene")]
     [SerializeField]
     private GameObject gameScene;
@@ -22,11 +23,14 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        gameMan = GameManager.Instance;
         AllUIHide();
-        SceneController.StartGameEvent += new SceneController.ChengeGameEventHandler(SetGameScene);
-        SceneController.StartClearEvent += new SceneController.ChengeClearEventHandler(SetClearScene);
-        SceneController.StartNextStageEvent += new SceneController.ChengeNextStageEventHandler(AllUIHide);
+		SceneController.StartStartEvent += SetStartScene;
+        SceneController.StartGameEvent += SetGameScene;
+        SceneController.StartClearEvent += SetClearScene;
+        SceneController.StartNextStageEvent += AllUIHide;
     }
+
 
     private void AllUIHide()
     {
@@ -58,5 +62,11 @@ public class UIManager : MonoBehaviour
     {
         print(word.word + "\n\n" + word.mean);
         MeanText.SetText(word.word + "\n\n" + word.mean);
+    }
+
+	public void OnClickStartButton()
+	{
+        gameMan.Init();
+        gameMan.ChengeNextScene();
     }
 }
