@@ -9,11 +9,11 @@ TerrainLayer:
   m_Name: mixedmoss
   m_DiffuseTexture: {fileID: 2800000, guid: 6d75afc3aa5924c298991c890c77ad4b, type: 3}
   m_NormalMapTexture: {fileID: 2800000, guid: 59de22d23d8954545a2e952e5359147e, type: 3}
-  m_MaskMapTexture: {fileID: 2800000, guid: 1c0b63c41400c402e8c1457dc945fa3e, type: 3}
+  m_MaskMapTexture: {fileID: 2800000, guid: 56fd1484bff5f48cd812e923cdc625df, type: 3}
   m_TileSize: {x: 2, y: 2}
   m_TileOffset: {x: 0, y: 0}
   m_Specular: {r: 0, g: 0, b: 0, a: 0}
-  m_Metallic: 0
+  m_Metallic: 0.037
   m_Smoothness: 0
   m_NormalScale: 1
   m_DiffuseRemapMin: {x: 0, y: 0, z: 0, w: 0}
