@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void Init()
     {
+        print("GameManager init!");
         playerCon.Init();
         stage = 0;
         score = 0;
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
 
     private void GameStart()
     {
+
         score = 0;
         scoreCon.SetScoreText(0);
         cameraCon.MoveStageCamera(stage);

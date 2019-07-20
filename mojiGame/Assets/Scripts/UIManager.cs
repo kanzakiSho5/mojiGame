@@ -66,6 +66,7 @@ public class UIManager : MonoBehaviour
 
 	public void OnClickStartButton()
 	{
+        print("Start");
         gameMan.Init();
         gameMan.ChengeNextScene();
     }

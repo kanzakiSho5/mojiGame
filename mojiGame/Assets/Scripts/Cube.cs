@@ -26,6 +26,8 @@ public class Cube : MonoBehaviour
     private const float DeleteTime = 20.0f;
     private float FixedTime = 0;
 
+    private bool isHardDrop = false;
+
     public delegate void FixedEnter();
     public FixedEnter OnFixedEnter;
 
@@ -128,7 +130,10 @@ public class Cube : MonoBehaviour
             }
             else if (inputMan.BtnUpDown && cubeMan.isBlockByPos())
             {
+                if (isHardDrop)
+                    return;
                 print("Harddrop");
+                isHardDrop = true;
                 StartCoroutine(HardDrop());
             }
         }

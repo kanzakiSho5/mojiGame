@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
 	bool isAnimationEnded = false;
 	int EndAnimationHash = 0;
 
-
     void Start()
     {
 		animator = GetComponent<Animator>();
@@ -18,16 +17,28 @@ public class PlayerController : MonoBehaviour
 		isAnimationEnded = false;
     }
 
-	private void Update()
+	private void LateUpdate()
 	{
-		// アニメーションが終わったら
-		if(!isAnimationEnded && 
-            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && 
+
+		if(SceneController.CurrentScene == SceneType.NextStage)
+        {
+            AnimatorEnded();
+        }
+	}
+
+    private void AnimatorEnded()
+    {
+
+        //print("Animation Ended! fullPathHash = " + EndAnimationHash);
+        if (isAnimationEnded)
+            return;
+
+        // アニメーションが終わったら
+        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
             EndAnimationHash != animator.GetCurrentAnimatorStateInfo(0).fullPathHash)
         {
             isAnimationEnded = true;
             EndAnimationHash = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
-            print("Animation Ended!");
             if (gameMan.stage == 3)
             {
                 gameMan.ChengeStartScene();
@@ -35,23 +46,22 @@ public class PlayerController : MonoBehaviour
             }
             if (SceneController.CurrentScene == SceneType.Start)
                 return;
-			gameMan.StageMoveAnimationEnded();
-		}
-	}
+            gameMan.StageMoveAnimationEnded();
+        }
+    }
 
     public void Init()
     {
+        isAnimationEnded = false;
+        animator.Play("oneFloor_Walk");
         print("PlayerInit "+ gameMan.stage);
         animator.SetBool("IsClearStage01", false);
         animator.SetBool("IsClearStage02", false);
         animator.SetBool("IsClearStage03", false);
-        if(gameMan.stage == 3)
-            animator.SetTrigger("ReStart");
     }
 
     public void ClearStage(int stage)
 	{
-
 		animator.SetBool("IsClearStage0"+ (stage), true);
 		isAnimationEnded = false;
 	}

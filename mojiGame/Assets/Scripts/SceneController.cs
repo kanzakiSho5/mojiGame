@@ -44,13 +44,12 @@ public class SceneController : MonoBehaviour
     private void Start()
 	{
 		gameMan = GameManager.Instance;
-		CurrentScene = SceneType.Start;
-		StartStartEvent();
+        ChengeStartScene();
 	}
 
 	private void Update()
 	{
-        print("CurrentScene = " + CurrentScene);
+        //print("CurrentScene = " + CurrentScene);
 		if(InputManager.Instance.BtnEscapeDown)
 		{
 			if (CurrentScene == SceneType.Game)
@@ -92,7 +91,6 @@ public class SceneController : MonoBehaviour
 				}
 				break;
 		}
-        
 	}
 
     public void ChengeStartScene()
@@ -103,6 +101,7 @@ public class SceneController : MonoBehaviour
 
     public void ChengeGameScene()
     {
+        print("ChangeGameScene");
         CurrentScene = SceneType.Game;
         StartGameEvent();
     }
@@ -112,7 +111,7 @@ public class SceneController : MonoBehaviour
     /// </summary>
     public void ChengeNextScene()
     {
-
+        print("Chenge stage NextScene");
         CurrentScene = SceneType.NextStage;
         StartNextStageEvent();
 	}
