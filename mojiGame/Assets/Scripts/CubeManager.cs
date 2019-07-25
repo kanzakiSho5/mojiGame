@@ -13,9 +13,12 @@ public class CubeManager : MonoBehaviour
     float blockDownSpeed = 2f;                      // ブロックの落ちるスピード
     [SerializeField]
     float blockFixSpeed = .5f;                      // ブロックが固定される時間
+
     [Header("StageObj")]
     [SerializeField]
     private Transform[] StagePoint;
+    [SerializeField]
+    private GameObject FieldGrid;
     public char[,] fieldChar {get; protected set;} = new char[21,8];     // フィールドにブロックが置かれているかどうか 0:なし その他:あり
     private Cube[,] fieldCube = new Cube[20, 6];
 
@@ -183,7 +186,16 @@ public class CubeManager : MonoBehaviour
 
         currentMovableCube = Instantiate<GameObject>(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
 
+        // Gridを表示
+        OpenGrid();
+
         //PrintField();
+    }
+
+    private void OpenGrid()
+    {
+        var obj = Instantiate(FieldGrid, StagePoint[gameMan.stage].transform);
+        obj.transform.localPosition = new Vector3(-0.523f,0.524f,0.54f);
     }
 
     /// <summary>

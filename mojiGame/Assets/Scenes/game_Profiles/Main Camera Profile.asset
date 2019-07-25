@@ -16,6 +16,8 @@ MonoBehaviour:
   - {fileID: 114690679749108636}
   - {fileID: 114213212255105358}
   - {fileID: 114200205696808924}
+  - {fileID: 114889542898221920}
+  - {fileID: 114955935945621924}
 --- !u!114 &114200205696808924
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -67,7 +69,7 @@ MonoBehaviour:
     overrideState: 1
     value: 0.56
   color:
-    overrideState: 0
+    overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
   ambientOnly:
     overrideState: 0
@@ -115,3 +117,87 @@ MonoBehaviour:
   sampleCount:
     overrideState: 1
     value: 10
+--- !u!114 &114889542898221920
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
+  m_Name: Bloom
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 2
+  threshold:
+    overrideState: 1
+    value: 1.06
+  softKnee:
+    overrideState: 1
+    value: 0.374
+  clamp:
+    overrideState: 0
+    value: 65471.73
+  diffusion:
+    overrideState: 1
+    value: 1.38
+  anamorphicRatio:
+    overrideState: 0
+    value: 0
+  color:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+  fastMode:
+    overrideState: 0
+    value: 0
+  dirtTexture:
+    overrideState: 0
+    value: {fileID: 0}
+    defaultState: 1
+  dirtIntensity:
+    overrideState: 0
+    value: 0
+--- !u!114 &114955935945621924
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
+  m_Name: AutoExposure
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  filtering:
+    overrideState: 1
+    value: {x: 69.28715, y: 96.22051}
+  minLuminance:
+    overrideState: 1
+    value: -3.9
+  maxLuminance:
+    overrideState: 1
+    value: 3.4
+  keyValue:
+    overrideState: 1
+    value: 1.02
+  eyeAdaptation:
+    overrideState: 0
+    value: 0
+  speedUp:
+    overrideState: 0
+    value: 2
+  speedDown:
+    overrideState: 0
+    value: 1
