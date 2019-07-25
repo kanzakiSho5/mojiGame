@@ -32,7 +32,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -69,13 +69,13 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.56
+    value: 3.57
   color:
     overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
   ambientOnly:
     overrideState: 0
-    value: 1
+    value: 0
   noiseFilterTolerance:
     overrideState: 0
     value: 0
@@ -87,9 +87,9 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 3.5
+    value: 3.74
   directLightingStrength:
-    overrideState: 0
+    overrideState: 1
     value: 0
   radius:
     overrideState: 0
@@ -114,33 +114,33 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   FogColor:
-    overrideState: 0
+    overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
   UseStylizedFogTexture:
-    overrideState: 0
+    overrideState: 1
     value: 0
   StylizedFogTexture:
-    overrideState: 0
-    value: {fileID: 0}
+    overrideState: 1
+    value: {fileID: 2800000, guid: 7baa4a8f5d6135a49a7cc60ca8249559, type: 3}
     defaultState: 1
   FogMinDistance:
-    overrideState: 0
+    overrideState: 1
     value: 0
   FogMaxDistance:
-    overrideState: 0
+    overrideState: 1
     value: 100
   IsExponential:
-    overrideState: 0
+    overrideState: 1
     value: 1
   ExponentialDensity:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 4.25
   FogIntensity:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 0.628
   FogOpacityMax:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 0.58
 --- !u!114 &114493339965193004
 MonoBehaviour:
   m_ObjectHideFlags: 3
