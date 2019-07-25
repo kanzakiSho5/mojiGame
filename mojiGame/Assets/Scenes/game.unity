@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 01f4eb1c73693428d923f1520032e7f9, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,8 +37,8 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465781, g: 0.4964128, b: 0.57481855, a: 1}
+  m_Sun: {fileID: 444980368}
+  m_IndirectSpecularColor: {r: 0.48325408, g: 0.52804375, b: 0.59745777, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -50,7 +50,7 @@ LightmapSettings:
     m_BounceScale: 1
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
-    m_EnvironmentLightingMode: 0
+    m_EnvironmentLightingMode: 1
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 104563757}
   - component: {fileID: 104563756}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PostProcessingVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 332366414}
   - component: {fileID: 332366417}
   - component: {fileID: 332366418}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -445,10 +445,10 @@ MonoBehaviour:
   volumeTrigger: {fileID: 332366416}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -457,8 +457,8 @@ MonoBehaviour:
   subpixelMorphologicalAntialiasing:
     quality: 2
   fastApproximateAntialiasing:
-    fastMode: 0
-    keepAlpha: 0
+    fastMode: 1
+    keepAlpha: 1
   fog:
     enabled: 1
     excludeSkybox: 1
@@ -3575,7 +3575,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086165355}
-  m_LocalRotation: {x: 0.03410694, y: 0.9041678, z: -0.07352669, w: 0.41941777}
+  m_LocalRotation: {x: 0.034106944, y: 0.9041677, z: -0.07352667, w: 0.41941783}
   m_LocalPosition: {x: -15.846985, y: -10.2065115, z: 3.5287657}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
