@@ -22,6 +22,16 @@ public class CubeManager : MonoBehaviour
     public char[,] fieldChar {get; protected set;} = new char[21,8];     // フィールドにブロックが置かれているかどうか 0:なし その他:あり
     private Cube[,] fieldCube = new Cube[20, 6];
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip moveSoundEffect;
+    [SerializeField]
+    private AudioClip hardDropSoundEffect;
+    [SerializeField]
+    private AudioClip createdSoundEffect;
+
+    private AudioSource source;
+
     private GameManager gameMan;
 
 
@@ -67,6 +77,7 @@ public class CubeManager : MonoBehaviour
     private void Start()
     {
         gameMan = GameManager.Instance;
+        source = GetComponent<AudioSource>();
         SceneController.StartGameEvent += new SceneController.ChengeGameEventHandler(init);
     }
 
@@ -116,9 +127,11 @@ public class CubeManager : MonoBehaviour
             var Pos = findedWords[i].Position;
             for (int j = 0; j < findedWords[i].Word.word.Length; j++)
             {
+                /*
                 Debug.Log("currentCube.x = " + currentMovableCube.Pos.x + ", Pos.x = " + Pos.x +
                     "\ncurrentCube.y = " + currentMovableCube.Pos.y + ", Pos.y = " + Pos.y +
                     "\nisHorizontal = "+ findedWords[i].isHorizontal);
+                */
 
                 // タテヨコを判定
                 if (findedWords[i].isHorizontal)
@@ -136,7 +149,7 @@ public class CubeManager : MonoBehaviour
                 else
                 {
                     // たて
-                    Debug.Log("fieldCube = " + Pos.x + ", " + (currentMovableCube.Pos.y + Pos.y + j));
+                    //Debug.Log("fieldCube = " + Pos.x + ", " + (currentMovableCube.Pos.y + Pos.y + j));
 
                     Cube cube = fieldCube[currentMovableCube.Pos.y + Pos.y + j, Pos.x];
                     if (cube != null)
@@ -149,6 +162,7 @@ public class CubeManager : MonoBehaviour
                 }
                 if(isCreatWord)
                 {
+                    PlayCubeSound(SoundType.created);
                     GameManager.Instance.ViewWord(findedWords[i].Word);
                 }
             }
@@ -195,7 +209,12 @@ public class CubeManager : MonoBehaviour
     private void OpenGrid()
     {
         var obj = Instantiate(FieldGrid, StagePoint[gameMan.stage].transform);
-        obj.transform.localPosition = new Vector3(-0.523f,0.524f,0.54f);
+        obj.transform.localPosition = new Vector3(-0.523f, 0.524f, 0.12f);
+    }
+
+    private void GameOver()
+    {
+
     }
 
     /// <summary>
@@ -240,13 +259,12 @@ public class CubeManager : MonoBehaviour
     /// <param name="Position">消すブロックの座標</param>
     public void DestroyBlockByPos(Vector2Int Position)
     {
-        // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
-        print("Position = [" + (Position.x) + ", " + (Position.y) + "]");
+        //print("Position = [" + (Position.x) + ", " + (Position.y) + "]");
         Destroy(fieldCube[Position.y, Position.x].gameObject);
         // 消したブロックの上のブロックたちを一つ下にずらす。
         for (int i = Position.y; i > 0; i--)
         {
-            print("Chenge FieldChar [" + i + ", " + (Position.x + 1) + "] = " + fieldChar[i, (Position.x + 1)]);
+            //print("Chenge FieldChar [" + i + ", " + (Position.x + 1) + "] = " + fieldChar[i, (Position.x + 1)]);
             fieldChar[i, Position.x + 1] = fieldChar[i - 1, Position.x + 1];
 
             Debug.Log("fieldCube[" + i + ", " + Position.x + "] = " +
@@ -274,6 +292,26 @@ public class CubeManager : MonoBehaviour
         return false;
     }
 
+    public void PlayCubeSound(SoundType soundType)
+    {
+        AudioClip clip = null;
+        switch(soundType)
+        {
+            case SoundType.move:
+                clip = moveSoundEffect;
+                break;
+            case SoundType.hardDrop:
+                clip = hardDropSoundEffect;
+                break;
+            case SoundType.created:
+                clip = createdSoundEffect;
+                break;
+        }
+
+        if (clip != null)
+            source.PlayOneShot(clip);
+    }
+
     /// <summary>
     /// currentCubeを固定して次のCubeを生成する。
     /// </summary>
@@ -281,15 +319,28 @@ public class CubeManager : MonoBehaviour
     {
         currentFixTime = 0f;
         currentMovableCube.OnFixedEnter();
-        // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
+        if(currentMovableCube.Pos.y <= 5)
+        {
+            print("GameOver");
+            gameMan.ChengeGameOverScene();
+            return;
+        }
         fieldChar[currentMovableCube.Pos.y, currentMovableCube.Pos.x + 1] = currentMovableCube.blockChar;
         fieldCube[currentMovableCube.Pos.y, currentMovableCube.Pos.x] = currentMovableCube;
         FindedWordAndPos[] findedWords = LibraryManager.FindWordByPos(currentMovableCube.Pos);
         Debug.Log("findedWords = " + findedWords.Length);
         // 完成した単語を検索して文字を赤くする
         CreatedWordSetScore(findedWords);
+
+
         //PrintField();
         currentMovableCube = Instantiate(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
     }
     #endregion
+}
+
+public enum SoundType{
+    move,
+    hardDrop,
+    created
 }

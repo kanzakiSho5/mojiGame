@@ -26,7 +26,6 @@ public class LibraryManager : MonoBehaviour
     /// <param name="Pos">検索する原点</param>
     public static FindedWordAndPos[] FindWordByPos(Vector2Int Pos)
     {
-        // TODO: Cubeの原点を直した際にpositionのオフセットを直す。
         char[,] fieldChar = CubeManager.Instance.fieldChar;
         List<FindedWordAndPos> ret = new List<FindedWordAndPos>();
         for(int i = 0; i < 2; i++)
@@ -48,7 +47,7 @@ public class LibraryManager : MonoBehaviour
                     // fieldの範囲外にならないように
                     if(Pos.y + j <= 20)
                     {
-                        Debug.Log("縦 = " + (Pos.y + j) + ", "+ (Pos.x + 1) + ",");
+                        //Debug.Log("縦 = " + (Pos.y + j) + ", "+ (Pos.x + 1) + ",");
                         str[j] = fieldChar[Pos.y + j, Pos.x + 1];
                     }
                 }

@@ -12,6 +12,7 @@ public enum SceneType
 {
 	Start,
 	Game,
+    GameOver,
 	NextStage,
 	Pause,
 	Clear
@@ -40,6 +41,9 @@ public class SceneController : MonoBehaviour
 
 	public delegate void ChengePauseEventHandler();
 	public static event ChengePauseEventHandler StartPauseEvent;
+
+    public delegate void ChengeGameOverEventHandler();
+    public static event ChengeGameOverEventHandler GameOverEvent;
 
     private void Start()
 	{
@@ -97,6 +101,11 @@ public class SceneController : MonoBehaviour
     {
         CurrentScene = SceneType.Start;
         StartStartEvent();
+    }
+
+    public void ChengeGameOverScene()
+    {
+        CurrentScene = SceneType.GameOver;
     }
 
     public void ChengeGameScene()

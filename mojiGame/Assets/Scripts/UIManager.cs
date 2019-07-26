@@ -14,6 +14,10 @@ public class UIManager : MonoBehaviour
     private GameObject StartScene;
     [SerializeField]
     private GameObject ClearScene;
+    [SerializeField]
+    private GameObject GameOverScene;
+    [SerializeField]
+    private GameObject PauseScene;
 
     [Header("GameScene UI")]
     [SerializeField]
@@ -37,6 +41,8 @@ public class UIManager : MonoBehaviour
         gameScene.SetActive(false);
         StartScene.SetActive(false);
         ClearScene.SetActive(false);
+        GameOverScene.SetActive(false);
+        PauseScene.SetActive(false);
     }
 
     private void SetGameScene()
@@ -56,6 +62,12 @@ public class UIManager : MonoBehaviour
     {
         AllUIHide();
         ClearScene.SetActive(true);
+    }
+
+    private void SetGameOverScene()
+    {
+        AllUIHide();
+        GameOverScene.SetActive(true);
     }
 
     public void ViewMeanByWord(Word word)

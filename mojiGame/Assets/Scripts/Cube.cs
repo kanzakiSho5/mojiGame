@@ -117,22 +117,26 @@ public class Cube : MonoBehaviour
             {
                 Pos.x--;
                 UpdatePos();
+                cubeMan.PlayCubeSound(SoundType.move);
             }
             else if (inputMan.BtnRightDown && cubeMan.isBlockByPos(1, 0))
             {
                 Pos.x++;
                 UpdatePos();
+                cubeMan.PlayCubeSound(SoundType.move);
             }
             else if (inputMan.BtnDownDown && cubeMan.isBlockByPos())
             {
                 Pos.y++;
                 UpdatePos();
+                cubeMan.PlayCubeSound(SoundType.move);
             }
             else if (inputMan.BtnUpDown && cubeMan.isBlockByPos())
             {
                 if (isHardDrop)
                     return;
                 print("Harddrop");
+                cubeMan.PlayCubeSound(SoundType.hardDrop);
                 isHardDrop = true;
                 StartCoroutine(HardDrop());
             }

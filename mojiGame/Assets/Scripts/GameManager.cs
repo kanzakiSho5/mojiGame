@@ -94,6 +94,11 @@ public class GameManager : MonoBehaviour
         sceneCon.CheckClear();
     }
 
+    public void ChengeGameOverScene()
+    {
+        sceneCon.ChengeGameOverScene();
+    }
+
     public void ChengeStartScene()
     {
         sceneCon.ChengeStartScene();
