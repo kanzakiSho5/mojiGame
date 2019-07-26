@@ -65,7 +65,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 844c7355d6ca6bb42b3be7574e4a176c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 463b7d9d9c7694135906b6b9dbd9f35b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4080034482805952016}
   - component: {fileID: 4080034482805952018}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.523, y: 0.524}
+  m_AnchoredPosition: {x: -0.5229492, y: 0.5239868}
   m_SizeDelta: {x: 124.8, y: 70.2}
   m_Pivot: {x: 0.388, y: 0.037}
 --- !u!223 &4080034482805952019
@@ -164,27 +164,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridSprites:
-  - {fileID: 21300000, guid: 9dc3cd9bc3bf1ab46ae300831cd742d5, type: 3}
-  - {fileID: 21300000, guid: 16c14002d0327b94ba196ae73a4aefdd, type: 3}
-  - {fileID: 21300000, guid: 05263df5cdc8b0042acb7a71cd7f81a3, type: 3}
-  - {fileID: 21300000, guid: 3bd9c3022ab434f43905ae4745458877, type: 3}
-  - {fileID: 21300000, guid: 4f75bb56d9df54144bfcbfb1ff88408b, type: 3}
-  - {fileID: 21300000, guid: 1278e7b09f84f8547aa8ff8eeeb27b40, type: 3}
-  - {fileID: 21300000, guid: f1bd08ef1c7aa1b43a5f0e2236684b59, type: 3}
-  - {fileID: 21300000, guid: 38967f3864e3b764482d751f101849ff, type: 3}
-  - {fileID: 21300000, guid: c6ef5aa8e776b2640848d7836721c0bf, type: 3}
-  - {fileID: 21300000, guid: 2cbbd5596e744a24e888d826c0e66eae, type: 3}
-  - {fileID: 21300000, guid: 8acbc71eefdf8d24899c66681c8eea9c, type: 3}
-  - {fileID: 21300000, guid: 7e02ef162c59d954ea96b677fdddb53b, type: 3}
-  - {fileID: 21300000, guid: 77b9e7bb83544ea4493bfa342bd8f8e0, type: 3}
-  - {fileID: 21300000, guid: ce3b3d2fcc391b841bd3c0e92fab3a7e, type: 3}
-  - {fileID: 21300000, guid: 4a530d63ab84a984c9eb74265b53ac35, type: 3}
-  - {fileID: 21300000, guid: 120c402539461fc418b0c89c3e2d263e, type: 3}
-  - {fileID: 21300000, guid: 87a655e5be989df4382b6a26eb264e77, type: 3}
-  - {fileID: 21300000, guid: d94f2a1a126bda54aad2f2f438d2e864, type: 3}
-  - {fileID: 21300000, guid: 7ba12c133a31c4143a1e9b27618921d6, type: 3}
-  - {fileID: 21300000, guid: 4e47a5e9dcb921d4fa7aabf48906ae98, type: 3}
-  - {fileID: 21300000, guid: 656f8af2189ad0e42be920b1b0232aa0, type: 3}
-  - {fileID: 21300000, guid: baf7e8975ff978e4ba98ed72630a8460, type: 3}
-  - {fileID: 21300000, guid: 844c7355d6ca6bb42b3be7574e4a176c, type: 3}
+  - {fileID: 21300000, guid: 9d22833a46b5f41f9a6e34ecd5dbfdfb, type: 3}
+  - {fileID: 21300000, guid: 57804d3af6d62496e83cfad27dba8511, type: 3}
+  - {fileID: 21300000, guid: 563e5efe166bc4acb938f61efb4e35e4, type: 3}
+  - {fileID: 21300000, guid: db01e1938740b4e528d329e91f5600ca, type: 3}
+  - {fileID: 21300000, guid: 13960daf6ccae4ad9965ae5a25865e6e, type: 3}
+  - {fileID: 21300000, guid: 596e69a5ff74e4768a6b11758d9cc2ce, type: 3}
+  - {fileID: 21300000, guid: 860dd3b43ec9647e4a7243f2a44dccea, type: 3}
+  - {fileID: 21300000, guid: dcc90dea895604133b550b263d281f0d, type: 3}
+  - {fileID: 21300000, guid: a4d79882e2a1f4830843b00b0541b8ab, type: 3}
+  - {fileID: 21300000, guid: 264506df89f8146d58752aaade3636d0, type: 3}
+  - {fileID: 21300000, guid: 13fdcdbe5b5834939a2dd126ca27f947, type: 3}
+  - {fileID: 21300000, guid: 7467d1d16212c430681c73ad355fb948, type: 3}
+  - {fileID: 21300000, guid: a19358bd18ae94a8db6d3c6187a046bc, type: 3}
+  - {fileID: 21300000, guid: 40a63b0bbe80646b887c7ae0bb8789e4, type: 3}
+  - {fileID: 21300000, guid: dab3d1ccd79fc40a98c5d03f2cae1a9f, type: 3}
+  - {fileID: 21300000, guid: 4fb8125111eed475fa746a6dc10b98c4, type: 3}
+  - {fileID: 21300000, guid: 0e0df2480aa47419391c43c1df51ed06, type: 3}
+  - {fileID: 21300000, guid: 62190dcec61644d41bca76ad97cb121a, type: 3}
+  - {fileID: 21300000, guid: a88418c4bef404d908f9934ce4d6c406, type: 3}
+  - {fileID: 21300000, guid: 463b7d9d9c7694135906b6b9dbd9f35b, type: 3}
   image: {fileID: 4080034482524168426}
