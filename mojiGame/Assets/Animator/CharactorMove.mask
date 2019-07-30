@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CharactorMove
+  m_Mask: 00000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: group1
+    m_Weight: 0
+  - m_Path: group1/pCube7
+    m_Weight: 1
+  - m_Path: group1/pCylinder1
+    m_Weight: 1
+  - m_Path: group1/pCylinder2
+    m_Weight: 1
+  - m_Path: group1/polySurface1
+    m_Weight: 1
+  - m_Path: group1/polySurface3
+    m_Weight: 1
+  - m_Path: ikHandle1
+    m_Weight: 0
+  - m_Path: ikHandle2
+    m_Weight: 0
+  - m_Path: ikHandle3
+    m_Weight: 0
+  - m_Path: ikHandle4
+    m_Weight: 0
+  - m_Path: master
+    m_Weight: 0
+  - m_Path: master/leg_L
+    m_Weight: 1
+  - m_Path: master/leg_L/knee_L
+    m_Weight: 1
+  - m_Path: master/leg_L/knee_L/foot_L
+    m_Weight: 1
+  - m_Path: master/leg_R
+    m_Weight: 1
+  - m_Path: master/leg_R/knee_R
+    m_Weight: 1
+  - m_Path: master/leg_R/knee_R/foot_R
+    m_Weight: 1
+  - m_Path: master/spine
+    m_Weight: 1
+  - m_Path: master/spine/neck
+    m_Weight: 1
+  - m_Path: master/spine/neck/head
+    m_Weight: 1
+  - m_Path: master/spine/neck/hear
+    m_Weight: 1
+  - m_Path: master/spine/neck/hear/joint12
+    m_Weight: 1
+  - m_Path: master/spine/neck/hear/joint12/joint13
+    m_Weight: 1
+  - m_Path: master/spine/neck/hear/joint12/joint13/joint14
+    m_Weight: 1
+  - m_Path: master/spine/neck/sholder_L
+    m_Weight: 1
+  - m_Path: master/spine/neck/sholder_L/elbow_L
+    m_Weight: 1
+  - m_Path: master/spine/neck/sholder_L/elbow_L/hand_L
+    m_Weight: 1
+  - m_Path: master/spine/neck/sholder_R
+    m_Weight: 1
+  - m_Path: master/spine/neck/sholder_R/elbow_R
+    m_Weight: 1
+  - m_Path: master/spine/neck/sholder_R/elbow_R/hand_R
+    m_Weight: 1
