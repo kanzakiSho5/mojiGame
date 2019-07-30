@@ -92,8 +92,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3793192404261543465}
-  Effect: {fileID: 6146818520825932838, guid: d3689727d804c4111a237d339c59d373, type: 3}
+  Effect: {fileID: 189212, guid: 89e6b9ae156b16c42bd4da5aa094d1fc, type: 3}
   isMovable: 0
+  createdParticle: {fileID: 198276, guid: 1720f2c1867206149a7c64de30295781, type: 3}
   Pos: {x: 0, y: 0}
 --- !u!1 &3073806026672449777
 GameObject:
@@ -261,16 +262,15 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\u3042"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f8e1341658f9a00488819e1a5b326137, type: 2}
-  m_sharedMaterial: {fileID: 21450693515805268, guid: f8e1341658f9a00488819e1a5b326137,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7b4c0c9be3e2bcd48bfcfd61396ed5b1, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 5be08dd0866e9cc4c8ed72097fb86f17, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291940817
-  m_fontColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+    rgba: 4289937672
+  m_fontColor: {r: 0.03137255, g: 0.25490198, b: 0.7019608, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
