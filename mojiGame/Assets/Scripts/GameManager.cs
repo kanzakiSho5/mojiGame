@@ -47,16 +47,33 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (SceneController.CurrentScene == SceneType.Clear)
+        switch(SceneController.CurrentScene)
         {
-            if (InputManager.Instance.BtnEnterDown)
-            {
-                print("NextStage");
-                stage++;
-                cameraCon.StageCameraAllOff();
-                sceneCon.ChengeNextScene();
-                playerCon.ClearStage(stage);
-            }
+            case SceneType.Clear:
+                if (InputManager.Instance.BtnEnterDown)
+                {
+                    print("NextStage");
+                    stage++;
+                    cameraCon.StageCameraAllOff();
+                    sceneCon.ChengeNextScene();
+                    playerCon.ClearStage(stage);
+                }
+                break;
+            case SceneType.Game:
+                break;
+            case SceneType.GameOver:
+                if(InputManager.Instance.BtnEnterDown)
+                {
+                    sceneCon.ChengeGameScene();
+                    CubeManager.Instance.DestroyFieldObj(stage);
+                }
+                break;
+            case SceneType.NextStage:
+                break;
+            case SceneType.Pause:
+                break;
+            case SceneType.Start:
+                break;
         }
     }
 
@@ -83,6 +100,11 @@ public class GameManager : MonoBehaviour
         isPlaying = false;
 
         playerCon.ClearStage(stage);
+    }
+
+    private void GameOver()
+    {
+        isPlaying = false;
     }
 
     public void ViewWord(Word word)

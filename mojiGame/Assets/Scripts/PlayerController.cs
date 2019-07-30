@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
             EndAnimationHash != animator.GetCurrentAnimatorStateInfo(0).fullPathHash)
         {
+            animator.SetTrigger("OnStop");
             isAnimationEnded = true;
             EndAnimationHash = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
             if (gameMan.stage == 3)
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
     public void ClearStage(int stage)
 	{
+        animator.SetTrigger("OnMove");
 		animator.SetBool("IsClearStage0"+ (stage), true);
 		isAnimationEnded = false;
 	}

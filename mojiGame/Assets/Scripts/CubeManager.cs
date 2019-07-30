@@ -78,7 +78,7 @@ public class CubeManager : MonoBehaviour
     {
         gameMan = GameManager.Instance;
         source = GetComponent<AudioSource>();
-        SceneController.StartGameEvent += new SceneController.ChengeGameEventHandler(init);
+        SceneController.StartGameEvent += init;
     }
 
     private void Update()
@@ -187,22 +187,8 @@ public class CubeManager : MonoBehaviour
         }
 
         //前のステージのCubeを全削除
-        print("reset Stage = " + ((gameMan.stage + 2) % 3));
-        foreach (Transform n in StagePoint[(gameMan.stage + 2) % 3])
-        {
-            Destroy(n.gameObject);
-        }
-        fieldCube = new Cube[20, 6];
-
-        currentTime = 0;
-        currentFixTime = 0;
-        currentDownTime = 0;
-
-        currentMovableCube = Instantiate<GameObject>(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
-
-        // Gridを表示
-        OpenGrid();
-
+        DestroyFieldObj((gameMan.stage + 2) % 3);
+        
         //PrintField();
     }
 
@@ -330,6 +316,24 @@ public class CubeManager : MonoBehaviour
 
         //PrintField();
         currentMovableCube = Instantiate(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
+    }
+
+    public void DestroyFieldObj(int Scene)
+    {
+        foreach (Transform n in StagePoint[Scene])
+        {
+            Destroy(n.gameObject);
+        }
+        fieldCube = new Cube[20, 6];
+
+        currentTime = 0;
+        currentFixTime = 0;
+        currentDownTime = 0;
+
+        currentMovableCube = Instantiate<GameObject>(blockPrefab, StagePoint[gameMan.stage]).GetComponent<Cube>();
+
+        // Gridを表示
+        OpenGrid();
     }
     #endregion
 }
