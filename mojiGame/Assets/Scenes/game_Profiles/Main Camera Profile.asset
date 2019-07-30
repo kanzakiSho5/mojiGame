@@ -19,7 +19,7 @@ MonoBehaviour:
   - {fileID: 114889542898221920}
   - {fileID: 114955935945621924}
   - {fileID: 114493339965193004}
-  - {fileID: 114104000060398874}
+  - {fileID: 114962531204504704}
 --- !u!114 &114104000060398874
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -379,3 +379,47 @@ MonoBehaviour:
   speedDown:
     overrideState: 0
     value: 1
+--- !u!114 &114962531204504704
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: PostProcess_StylizedFog
+  m_EditorClassIdentifier: Assembly-CSharp::PostProcess_StylizedFog
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  FogColor:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+  UseStylizedFogTexture:
+    overrideState: 1
+    value: 0
+  StylizedFogTexture:
+    overrideState: 1
+    value: {fileID: 2800000, guid: 7baa4a8f5d6135a49a7cc60ca8249559, type: 3}
+    defaultState: 1
+  FogMinDistance:
+    overrideState: 1
+    value: 0
+  FogMaxDistance:
+    overrideState: 1
+    value: 100
+  IsExponential:
+    overrideState: 1
+    value: 1
+  ExponentialDensity:
+    overrideState: 1
+    value: 2.26
+  FogIntensity:
+    overrideState: 1
+    value: 0.51
+  FogOpacityMax:
+    overrideState: 1
+    value: 0.813
