@@ -21,8 +21,6 @@ public class UIManager : MonoBehaviour
 
     [Header("GameScene UI")]
     [SerializeField]
-    private GameObject ClearText;
-    [SerializeField]
     private TextMeshProUGUI MeanText;
 
     private void Start()
@@ -32,6 +30,8 @@ public class UIManager : MonoBehaviour
 		SceneController.StartStartEvent += SetStartScene;
         SceneController.StartGameEvent += SetGameScene;
         SceneController.StartClearEvent += SetClearScene;
+        SceneController.StartPauseEvent += SetPauseScene;
+        SceneController.StartGameOverEvent += SetGameOverScene;
         SceneController.StartNextStageEvent += AllUIHide;
     }
 
@@ -62,6 +62,12 @@ public class UIManager : MonoBehaviour
     {
         AllUIHide();
         ClearScene.SetActive(true);
+    }
+
+    private void SetPauseScene()
+    {
+        AllUIHide();
+        PauseScene.SetActive(true);
     }
 
     private void SetGameOverScene()

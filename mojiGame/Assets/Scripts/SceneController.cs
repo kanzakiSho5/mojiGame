@@ -43,7 +43,7 @@ public class SceneController : MonoBehaviour
 	public static event ChengePauseEventHandler StartPauseEvent;
 
     public delegate void ChengeGameOverEventHandler();
-    public static event ChengeGameOverEventHandler GameOverEvent;
+    public static event ChengeGameOverEventHandler StartGameOverEvent;
 
     private void Start()
 	{
@@ -106,6 +106,7 @@ public class SceneController : MonoBehaviour
     public void ChengeGameOverScene()
     {
         CurrentScene = SceneType.GameOver;
+        StartGameOverEvent();
     }
 
     public void ChengeGameScene()
