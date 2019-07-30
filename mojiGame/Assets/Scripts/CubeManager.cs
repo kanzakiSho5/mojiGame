@@ -211,12 +211,7 @@ public class CubeManager : MonoBehaviour
         var obj = Instantiate(FieldGrid, StagePoint[gameMan.stage].transform);
         obj.transform.localPosition = new Vector3(-0.523f, 0.524f, 0.12f);
     }
-
-    private void GameOver()
-    {
-
-    }
-
+    
     /// <summary>
     /// デバッグ用
     /// </summary>

@@ -13,18 +13,21 @@ public class Cube : MonoBehaviour
     [SerializeField]
     public bool isMovable;
     public bool isCreatedWord { get; protected set; }
-
+    [SerializeField]
+    private GameObject createdParticle;
 
     [SerializeField]
     public Vector2Int Pos;
     
     [System.NonSerialized]
     public char blockChar;
+    
 
     private InputManager inputMan;
     private CubeManager cubeMan;
     private const float DeleteTime = 20.0f;
     private float FixedTime = 0;
+    private GameObject hardDropParticle;
 
     private bool isHardDrop = false;
 
@@ -41,7 +44,6 @@ public class Cube : MonoBehaviour
         isCreatedWord = false;
         SetChar(true);
         OnFixedEnter += FixedBlock;
-        OnFixedEnter += FixedEffects;
     }
 
     private void Update()
@@ -149,18 +151,22 @@ public class Cube : MonoBehaviour
     private void FixedBlock()
     {
         print("FixedBlock");
+        if (hardDropParticle != null)
+            StartCoroutine(WaitHardDropParticle());
         isMovable = false;
         FixedTime = cubeMan.currentTime;
     }
 
-    private void FixedEffects()
+    IEnumerator WaitHardDropParticle()
     {
-        StartCoroutine(FixedEffect());
+        yield return new WaitForSeconds(.2f);
+        Destroy(hardDropParticle);
     }
-
+    
     IEnumerator HardDrop()
     {
-        while(cubeMan.isBlockByPos())
+        hardDropParticle = Instantiate(Effect, transform);
+        while (cubeMan.isBlockByPos())
         {
             Pos.y++;
             UpdatePos();
@@ -169,14 +175,6 @@ public class Cube : MonoBehaviour
         print("EndHardDrop");
         cubeMan.FixedCurrentCube();
     }
-
-    IEnumerator FixedEffect()
-    {
-        GameObject obj = Instantiate<GameObject>(Effect, transform.position, Quaternion.identity, this.transform);
-        yield return new WaitForSeconds(1f);
-        Destroy(obj);
-    }
-
 
     /// <summary>
     /// 1ブロック分下げる
@@ -193,10 +191,14 @@ public class Cube : MonoBehaviour
     /// <returns><c>true</c>, if word was createded, <c>false</c> otherwise.</returns>
     public bool CreatedWord()
     {
+        
         if (isCreatedWord)
             return false;
 
         isCreatedWord = true;
+
+        var particle = Instantiate(createdParticle, transform);
+        particle.transform.localPosition = -Vector3.forward;
         text.color = Color.red;
 
         return true;
